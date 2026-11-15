@@ -22,7 +22,7 @@ Archive of past reviews. **Not current guidance.** Current rules live in the num
 |---|---|---|---|
 | 1 | Source and cite SSS, PhilHealth, Pag-IBIG, BIR tables | Payroll lead | Before M3 start |
 | 2 | Counsel review of retention and DPA posture | Owner | Before M1 exit |
-| 3 | Decide OD-01, OD-03, OD-04 | Owner | Before M0 exit |
+| 3 | ~~Decide OD-01, OD-03, OD-04~~ Closed 2026-11-15: ADR-004, ADR-011, ADR-006 (auth confirmed by M0 spike) | Owner | Done |
 | 4 | Wireframes for core flows | Owner | M1 |
 | 5 | Recruit parallel-run partner | Owner | Before M3 |
 
@@ -42,7 +42,7 @@ Archive of past reviews. **Not current guidance.** Current rules live in the num
 | 10 | Low | About 30 stories had blank or untestable AC | AC filled; build order added per milestone |
 | 11 | Low | "No milestone starts before the previous gate" conflicts with research that must start early | Allowed overlaps documented in milestones.md |
 
-**Not changed (judgment calls to confirm with the owner)**
+**Judgment calls (decided 2026-11-15, see [ADR-012](../03-design/adr/ADR-012-payroll-first-release-scope.md) and [open-decisions](../00-overview/open-decisions.md))**
 - M7 keeps its number but runs after M8. Renumbering was rejected because it would break every story, FR and TDD reference.
 - Estimates rose to 44–54 weeks pre-GA because stories were missing, not because of padding. They remain unvalidated guesses.
 - Story sizes were judged from titles and AC, not from spikes. Re-check when each milestone is refined.
@@ -50,7 +50,7 @@ Archive of past reviews. **Not current guidance.** Current rules live in the num
 **Actions**
 | # | Action | Owner | Due |
 |---|---|---|---|
-| 1 | Confirm the M7-after-GA decision | Owner | Before M0 exit |
+| 1 | ~~Confirm the M7-after-GA decision~~ Closed 2026-11-15: ADR-012 | Owner | Done |
 | 2 | Recruit parallel-run partner | Owner | M1 exit |
 | 3 | Source and cite rule-set data so US-316 has real values to load | Payroll lead | During M2 |
 | 4 | Split stories marked "split at refine" (US-307) | Owner | M3 refine |

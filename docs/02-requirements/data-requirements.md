@@ -43,7 +43,7 @@
 | DSR (data subject request) | type, status, due | |
 | BreachIncident | | |
 | AuditLog | actor, action, entity, before/after (redacted), reason, hash chain | append-only |
-| Candidate, Requisition, Offer | | M6 |
+| Candidate, Requisition, Offer | | M7 (post-GA) |
 | Goal, Review, Training, Enrollment, Benefit | | M7 |
 
 ## Data quality rules

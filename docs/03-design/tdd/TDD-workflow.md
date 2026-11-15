@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Story/FR | US-501, US-502, US-503 / FR-501…FR-503 |
+| Story/FR | US-213 (cut 1), US-501, US-502, US-503 / FR-213, FR-501…FR-503 |
 | Status | Draft |
 | ADRs | 001 |
 
@@ -62,6 +62,10 @@ Timer lost (Redis flush): reconciliation job scans pending tasks past due every 
 Unit: expression evaluator, resolvers. Integration: multi-step flows, conditional steps, delegation, escalation with fake clock, concurrent approvals. Property: every instance reaches a terminal state or has a pending task assigned to an active user. Security: IDOR on tasks, self-approval attempts. E2E: leave and OT journeys.
 
 ## 6. Rollout
+Two cuts, one engine:
+- **Cut 1 (M2, US-213):** fixed definitions in code-reviewed config, one or two steps, `direct_manager` and `role` resolvers, no-self-approval, atomic decisions, in-app notification only. Data model is the final one (§2.3) so cut 2 needs no migration of in-flight instances.
+- **Cut 2 (M5, US-501…US-503):** definition editor, conditional steps, delegation, escalation timers, email/push, preferences.
+
 Ship with default definitions per request type; edit UI after one customer pilot.
 
 ## 7. Open questions

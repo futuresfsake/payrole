@@ -1,6 +1,6 @@
 # ADR-004: Shared-schema multi-tenancy with Postgres Row-Level Security
 
-**Status:** Proposed (pending OD-01) · **Date:** 2026-11-15
+**Status:** Accepted (OD-01 closed 2026-11-15) · **Date:** 2026-11-15
 
 ## Context
 SaaS economics need many tenants on one stack; isolation failures are existential (RISK-06).
@@ -17,6 +17,9 @@ Single database, shared schema, `tenant_id` on every table, RLS `FORCE`d, app ro
 
 ## Verification
 CI: schema lint (every tenant table has policy), negative tests per module, fuzz test that swaps tenant context mid-request must fail.
+
+## Acceptance conditions
+Before M0 exit: the schema lint, negative tenant tests and the mid-request tenant-swap fuzz test pass in CI, and RLS performance is benchmarked at the NFR scale (25,000 employees). If the benchmark fails NFR-01, revisit policy shape (not the model) first.
 
 ## Alternatives
 Schema-per-tenant (migration fan-out pain), database-per-tenant (cost/ops), app-layer filtering only (rejected: single bug = breach).

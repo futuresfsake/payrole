@@ -6,7 +6,7 @@ Score = Likelihood (1–5) × Impact (1–5).
 |---|---|---|---|---|---|---|
 | RISK-01 | Payroll miscalculation from stale/wrong statutory data | 3 | 5 | 15 | Rules as versioned data with citations, golden tests, parallel run, "explain this number" view | Payroll lead |
 | RISK-02 | Data breach of employee PII/SPI (IDs, TIN, SSS no., salary) | 2 | 5 | 10 | Field-level encryption, RLS, MFA, audit, 72h breach runbook, pen test | Security |
-| RISK-03 | Scope explosion (HRIS is huge) | 5 | 3 | 15 | Milestone gates; payroll + core HR first; defer performance/learning | Owner |
+| RISK-03 | Scope explosion (HRIS is huge) | 5 | 3 | 15 | Milestone gates; payroll + core HR first; ATS, performance, learning and benefits (M7) moved after GA; stories larger than 3 days are split at refine | Owner |
 | RISK-04 | Single-person bus factor | 4 | 4 | 16 | Docs-first, ADRs, runbooks, boring tech, IaC | Owner |
 | RISK-05 | Government file formats change or are undocumented | 4 | 3 | 12 | Isolate in export adapters, versioned templates, spike each | Eng |
 | RISK-06 | Multi-tenant isolation bug leaks across customers | 2 | 5 | 10 | Postgres RLS + tenant-scoped tests in CI + negative tests | Eng |
@@ -18,3 +18,4 @@ Score = Likelihood (1–5) × Impact (1–5).
 | RISK-12 | Cost overruns from cloud/SMS | 2 | 3 | 6 | Budgets and alerts, per-tenant metering | Ops |
 | RISK-13 | Time zone/date bugs in cut-offs | 3 | 3 | 9 | Store UTC + business-date columns for Asia/Manila; tests across boundaries | Eng |
 | RISK-14 | Money rounding errors | 3 | 4 | 12 | Decimal arithmetic only (no floats), rounding policy in BR-RND, property tests | Eng |
+| RISK-15 | Schedule: pre-GA estimate (44–54 weeks solo part-time) slips, or the parallel-run partner (GAP-02) is not found in time | 4 | 4 | 16 | Re-plan estimates at every gate; recruit partner in M1; Alpha fallback of externally reviewed hand-computed scenarios; cut Should/Could stories before moving a gate | Owner |

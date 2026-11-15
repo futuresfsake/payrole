@@ -13,7 +13,7 @@ Branch ↔ env flow in [branching](../07-process/branching.md).
 ## Topology (initial)
 - 2× app containers (stateless) behind load balancer + WAF/CDN
 - 1–2× worker containers
-- Managed PostgreSQL (HA, PITR) in SEA region (OD-03)
+- Managed PostgreSQL (RDS, Multi-AZ from private beta, PITR) in AWS ap-southeast-1 ([ADR-011](../03-design/adr/ADR-011-hosting-aws-singapore.md))
 - Managed Redis
 - Object storage (versioned, SSE-KMS, separate buckets for documents, exports, backups; public access blocked)
 - KMS, secret manager, DNS, TLS certs (auto-renew)

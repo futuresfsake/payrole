@@ -1,21 +1,32 @@
-# Open Decisions
+# Decisions Register
 
-Decisions still needed. Each has a recommendation so work is not blocked. Closed items move to an ADR.
+Every decision that was open at baseline v0.1 is now decided (2026-11-15, owner with senior-engineer recommendation). Architecture-level decisions live in an ADR; product, commercial and operational ones are recorded here with the reason.
 
-| ID | Decision | Options | Recommendation | Needed by | Status |
+Status: **Decided** (final until its review trigger fires), **Decided, conditional** (final, with a stated check that can reverse it).
+
+| ID | Decision | Choice | Why | Review trigger | Status |
 |---|---|---|---|---|---|
-| OD-01 | Product model: internal tool vs multi-tenant SaaS | Single-tenant per customer / multi-tenant shared DB / multi-tenant schema-per-tenant | Multi-tenant shared DB with `tenant_id` + Postgres row-level security (ADR-004) | Before M0 exit | Proposed |
-| OD-02 | Initial market segment | 50–200 / 200–500 / enterprise | 50–200 employees, single entity | Before M1 | Proposed |
-| OD-03 | Hosting region | AWS Singapore / Azure SEA / local PH colo / PaaS (Render/Fly) | Managed cloud in Singapore, PH-resident backup optional; DPA cross-border via contract. **VERIFY** availability of a PH region at decision time | Before M0 exit | Open |
-| OD-04 | Auth provider | Build on library / Keycloak / managed (Auth0, Clerk, Neon Auth) | Managed OIDC provider with MFA, behind an adapter (ADR-006) | M0 | Proposed |
-| OD-05 | Biometric / time-clock integration | CSV import / vendor API / ZKTeco ADMS push / mobile geo-punch | CSV + ZKTeco push in M2; mobile punch M5 | M2 | Open |
-| OD-06 | Bank payroll file formats | BDO, BPI, Metrobank, UnionBank, Landbank, InstaPay/PESONet | Generic CSV in M3, top 3 bank templates in M4. **GAP-07** need current specs from banks | M3 | Open |
-| OD-07 | Government filing method | File generation only / direct e-submission | File generation only (no direct submission credentials stored) | M4 | Proposed |
-| OD-08 | Native mobile vs PWA | Native / React Native / PWA | PWA first, WebAuthn/push, revisit at M7 | M5 | Proposed |
-| OD-09 | AI features scope | None / assistive only / agentic | Assistive only, no PII to third-party models without DPA review (ADR-009) | M6 | Proposed |
-| OD-10 | Pricing / licensing | Per employee per month / flat tier | Out of scope for docs; track separately | Pre-launch | Open |
-| OD-11 | Payslip delivery | Portal only / email PDF (password) / both | Portal default, encrypted PDF email optional | M3 | Proposed |
-| OD-12 | Data retention periods | By record class | Defined in [data-protection](../04-security/data-protection.md) draft; **needs legal confirmation** (GAP-03) | M3 | Open |
-| OD-13 | Language | English only / English + Filipino | English v1, i18n-ready strings, Filipino at M7 | M1 | Proposed |
-| OD-14 | Who is the Data Protection Officer for the SaaS operator | Owner / hired / outsourced | Owner interim, appoint formally before first customer | Pre-launch | Open |
-| OD-15 | Product name and trademark | PayRole (chosen by owner 2026-11-15) / Plantilla / Kawani | Check IPOPHL and domain availability (GAP-12). Descriptive near-homophone of "payroll" may be a weak mark | Pre-launch | Chosen, unverified |
+| OD-01 | Product model | Multi-tenant SaaS, shared schema, `tenant_id` plus Postgres RLS | Cheapest per tenant; RLS gives defence in depth against query bugs ([ADR-004](../03-design/adr/ADR-004-multitenancy-rls.md)) | A customer demands a dedicated database | Decided |
+| OD-02 | Initial segment | 50–200 employees, single legal entity, semi-monthly and monthly pay | Matches solo capacity and the 500-employee NFR headroom; multi-entity groups are a different data model | 3 paying customers in a different segment | Decided |
+| OD-03 | Hosting | AWS Singapore (ap-southeast-1), managed containers and Postgres ([ADR-011](../03-design/adr/ADR-011-hosting-aws-singapore.md)) | Managed PITR, KMS and low ops; no assumption of an in-country region | A PH region exists, or customer requires residency | Decided |
+| OD-04 | Auth provider | Managed OIDC behind `IdentityPort`; default **Auth0**, confirmed by a 2-day scored spike at M0 start; fallback managed Keycloak ([ADR-006](../03-design/adr/ADR-006-auth-provider.md)) | Do not build authentication; mature MFA, passkeys and SAML | Spike fails a veto criterion; cost at 25k users unacceptable | Decided, conditional |
+| OD-05 | Time-clock integration | CSV upload and ZKTeco ADMS push in M2; mobile punch in M5; no vendor-specific API in v1 | ZKTeco-class devices are the common SME install; CSV is the universal fallback; idempotent ingest (TDD-time-ingest) | A partner uses a device that supports neither | Decided |
+| OD-06 | Bank files | Generic CSV in M3 (US-317); bank templates in M4 (US-404) for the **parallel-run partner's bank first**, then the next two most common among pilot customers (default order: BDO, BPI, Metrobank). Specs obtained from the banks or customers, never guessed | Build only formats we can validate against a real spec (GAP-07) | Partner bank is not in the default list | Decided |
+| OD-07 | Government filing | File generation only; the customer uploads ([ADR-003](../03-design/adr/ADR-003-file-generation-only.md)) | No stored agency credentials; lower liability | Agencies publish official APIs with clear terms | Decided |
+| OD-08 | Mobile | PWA first (WebAuthn, push); no native app | One codebase; adequate for ESS flows | Mobile punch or offline needs exceed PWA limits (revisit after beta) | Decided |
+| OD-09 | AI scope | Assistive only; no PII to external models without a DPA review and redaction ([ADR-009](../03-design/adr/ADR-009-ai-assistive-only.md)); all AI features are post-GA | Payroll liability; privacy | A DPIA clears a specific feature | Decided |
+| OD-10 | Pricing model | Per employee per month with a minimum monthly fee per tenant. Amounts set before private beta, from measured cost per tenant (NFR-24) | Matches how SME payroll is bought; cost scales with employees | First customer conversations | Decided (model only; amounts open until beta) |
+| OD-11 | Payslip delivery | Portal only in v1. No emailed payslip PDFs. Email carries a notification with a deep link, no amounts | Avoids salary data in mailboxes and password-PDF support burden (T-08) | A customer needs email delivery; then encrypted PDF with a per-user passphrase, as a flag | Decided |
+| OD-12 | Retention periods | Adopt the draft table in [data-protection](../04-security/data-protection.md), applying the **longest applicable period** where laws conflict. The retention engine (US-510) runs in **dry-run only** until counsel confirms (GAP-03); no automated deletion of payroll or 201 data before then | Over-retaining is recoverable; wrongly deleting statutory records is not | Counsel review completes | Decided, conditional |
+| OD-13 | Language | English (en-PH) in v1, all strings externalised; Filipino as post-GA US-705 | Payroll terms are English in practice; i18n-ready avoids rework | Customer demand | Decided |
+| OD-14 | Data Protection Officer | The owner is the written, interim DPO. Formal designation document signed before private beta; outsourced DPO considered before the first paying customer | Required by RA 10173 for the processor; cheapest compliant path | First paying customer, or conflict of interest | Decided |
+| OD-15 | Name | **PayRole is the working name.** Brand strings and domain live in one config module and one doc so a rename is a find-and-replace; IPOPHL search and domain check done by M3; rename before beta if the search finds a conflict or the mark is judged too weak | A near-homophone of "payroll" is likely a weak, descriptive mark, but a rename before launch is cheap | IPOPHL result; first external demo | Decided, conditional |
+
+## Dependencies now unblocked
+- M0 may start: OD-01, OD-03, OD-04 are decided (the 2-day auth spike is the first M0 task).
+- M2 integration scope is fixed (OD-05).
+- M3 bank scope is fixed (OD-06); the first bank is named by the partner (GAP-02).
+- Private beta needs: OD-10 amounts, OD-14 designation document, OD-15 search result, OD-12 counsel sign-off or dry-run-only retention.
+
+## How decisions change
+A decided item is reopened only by its review trigger. Reopening means a new ADR (or a dated edit here for non-architecture items) that supersedes the old one; history stays in git.

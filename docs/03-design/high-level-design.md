@@ -119,5 +119,5 @@ See [NFRs](../02-requirements/non-functional-requirements.md), [testing-strategy
 ## 9. Risks and open technical questions
 - Compute-heavy payroll in Node: acceptable at 500 emp (NFR-02); fallback = worker pool or extracted service.
 - RLS performance with complex policies: benchmark in M0.
-- PH hosting latency/residency: OD-03.
+- Singapore hosting latency from Manila: measure in M0 against NFR-01; residency handled by contract (ADR-011).
 - Field-level encryption vs searchability: blind indexes (LLD §Crypto).

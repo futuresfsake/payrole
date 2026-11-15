@@ -37,4 +37,4 @@ Each FR is: unambiguous, atomic, testable, traceable, prioritized, and states ac
 - C-04 Solo developer: complexity budget is low; favor boring technology.
 
 ## Dependencies
-Agency formats (GAP-08), bank formats (GAP-07), hosting (OD-03), auth provider (OD-04).
+Agency formats (GAP-08), bank formats (GAP-07), hosting (decided, ADR-011), auth provider (decided, ADR-006; M0 spike confirms).

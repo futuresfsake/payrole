@@ -25,7 +25,7 @@ Age/birth date, marital status, government-issued identifiers, health data (medi
 ## Roles and contracts
 - Customer = PIC; PayRole = PIP. DPA contract template to be drafted and counsel-reviewed (GAP-09).
 - Data sharing: none with third parties other than sub-processors and agencies at the customer's direction (file downloads by customer).
-- Cross-border: per hosting decision (OD-03), disclosed.
+- Cross-border: hosted in AWS Singapore (ADR-011), disclosed in notice and DPA.
 
 ## Registration and filings
 Determine whether registration of data processing systems/DPO with NPC is required for the operator and for customers; document outcome (GAP-13). Provide customers a guide to register their HR processing where applicable.

@@ -32,7 +32,7 @@ Access, correction, erasure/blocking, objection, data portability, damages. Port
 Detect → contain → assess (SPI? risk of serious harm?) → notify NPC and affected data subjects within 72 hours of knowledge or reasonable belief when required (**VERIFY** NPC Circular 16-03 and updates) → remediate → post-incident review. Breach register in Privacy console (FR-702). Customers (PICs) notified immediately by PIP per contract (target ≤ 24 h).
 
 ## Cross-border transfer
-If hosted outside PH: disclosed in privacy notice and DPA; contract clauses and security parity; record transfer map. OD-03 decides.
+If hosted outside PH: disclosed in privacy notice and DPA; contract clauses and security parity; record transfer map. OD-03 is decided: AWS Singapore ([ADR-011](../03-design/adr/ADR-011-hosting-aws-singapore.md)), so this section applies to every customer.
 
 ## Employee notice
 Template privacy notice delivered at onboarding: what data, why, who sees it, retention, rights, contact DPO.

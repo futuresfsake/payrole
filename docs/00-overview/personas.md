@@ -18,7 +18,7 @@
 - **Regulators (indirect):** BIR, SSS, PhilHealth, Pag-IBIG, DOLE, NPC.
 - **Vendors:** hosting provider, SMS/email provider, bank file specs, biometric vendors.
 
-## Segment assumptions (see OD-02)
+## Segment assumptions (decided, OD-02)
 - Single legal entity per tenant at launch; multi-entity (group of companies) in M8+.
 - Monthly/semi-monthly pay frequency dominates; weekly and daily-paid supported by rule engine.
 - Mix of office (fixed schedule) and shift/field staff.

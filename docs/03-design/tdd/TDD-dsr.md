@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Story/FR | US-509, US-805 / FR-505, FR-701, FR-702, FR-703 |
+| Story/FR | US-509, US-510, US-511, US-512, US-805 / FR-505, FR-701, FR-702, FR-703 |
 | Status | Draft |
 | ADRs | 007, 010 |
 

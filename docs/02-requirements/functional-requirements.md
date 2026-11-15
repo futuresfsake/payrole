@@ -12,6 +12,8 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 | FR-005 | The system shall enforce permissions by role and scope (self, team, department, company) with deny-by-default | M | US-007 |
 | FR-006 | The system shall allow admins to define custom roles from granular permissions | S | US-007 |
 | FR-007 | The system shall provide tenant setup capturing legal name, TIN, SSS/PhilHealth/Pag-IBIG employer numbers, RDO code, pay frequency | M | US-009 |
+| FR-008 | The system shall run background jobs idempotently with retry, dead-lettering and requester-visible status, and deliver domain events through a transactional outbox at least once | M | US-012 |
+| FR-009 | The system shall send transactional email (invites, MFA enrolment, reset) with SPF/DKIM/DMARC and no PII in subjects | M | US-013 |
 
 ## Core HR
 | ID | Requirement | P | Story |
@@ -28,6 +30,7 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 | FR-110 | The system shall track dependents and beneficiaries | S | US-107 |
 | FR-111 | The system shall generate a Certificate of Employment from a template | S | US-112 |
 | FR-112 | The system shall maintain a data inventory: field → classification → purpose → retention | S | US-111 |
+| FR-113 | The system shall keep an effective-dated compensation and payroll profile per employee (basic pay, pay basis, pay group, tax status, bank account, statutory enrolment, previous-employer income) as the single source of payroll inputs | M | US-113 |
 
 ## Time and Leave
 | ID | Requirement | P | Story |
@@ -35,23 +38,25 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 | FR-201 | The system shall support fixed, flexible, shift-based, and compressed schedules | M | US-201 |
 | FR-202 | The system shall maintain a holiday calendar with type (regular, special non-working, special working, local), date, and citation | M | US-202 |
 | FR-203 | The system shall ingest time logs from CSV and device push, idempotently, preserving raw logs | M | US-203 |
-| FR-204 | The system shall compute daily attendance (worked hours, late, undertime, absent, OT, NSD, rest day, holiday) per BR-TIME | M | US-204 |
+| FR-204 | The system shall compute daily attendance (worked hours, late, undertime, absent, OT, NSD, rest day, holiday) per BR-TIME | M | US-204, US-215 |
 | FR-205 | The system shall support OT requests with approval and configurable pre-approval requirement | M | US-205 |
 | FR-206 | The system shall support time-correction requests with reason and approval | M | US-206 |
 | FR-207 | The system shall support configurable leave types including statutory leaves | M | US-207 |
-| FR-208 | The system shall accrue, carry over, expire, and convert leave per policy | M | US-208 |
+| FR-208 | The system shall accrue, carry over, expire, and convert leave per policy | M | US-208, US-216 |
 | FR-209 | The system shall allow leave requests with balance check, half-day, and attachments | M | US-209 |
 | FR-210 | The system shall show a team leave calendar | S | US-210 |
 | FR-211 | The system shall lock attendance per period; unlocking requires a reason and is audited | M | US-211 |
 | FR-212 | The system shall support work-suspension events with a configurable pay treatment | S | US-212 |
+| FR-213 | The system shall provide a basic approval service (one or two steps, manager and role resolvers, no self-approval, in-app notification) used by OT, time-correction and leave requests from M2 | M | US-213 |
+| FR-214 | The system shall give every employee a portal limited to their own attendance, leave and requests | M | US-214 |
 
 ## Payroll
 | ID | Requirement | P | Story |
 |---|---|---|---|
 | FR-301 | The system shall support pay groups with frequency, cut-off, and pay dates | M | US-301 |
 | FR-302 | The system shall support configurable earning and deduction codes with tax/contribution treatment flags | M | US-302 |
-| FR-303 | The system shall compute gross pay from rate, attendance, premiums per BR-PAY | M | US-303 |
-| FR-304 | The system shall compute SSS, PhilHealth, Pag-IBIG contributions from effectivity-dated rule sets | M | US-304 |
+| FR-303 | The system shall compute gross pay from rate, attendance, premiums per BR-RATE and BR-TIME | M | US-303, US-318 |
+| FR-304 | The system shall compute SSS, PhilHealth, Pag-IBIG contributions from effectivity-dated rule sets | M | US-304, US-319, US-320 |
 | FR-305 | The system shall compute withholding tax using the configured method and tax table | M | US-305 |
 | FR-306 | The system shall manage loans with schedules, priority, and balance | M | US-306 |
 | FR-307 | The system shall support run lifecycle: draft, computed, submitted, approved, finalized, paid, reversed | M | US-307, US-308 |
@@ -64,6 +69,7 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 | FR-314 | The system shall perform annualization and year-end true-up | M | US-313 |
 | FR-315 | The system shall store a step-by-step calculation trace per employee per run | M | US-314 |
 | FR-316 | The system shall make finalized runs immutable; corrections are new adjustments | M | US-308 |
+| FR-317 | The system shall manage statutory rule sets as versioned, effectivity-dated data with a source citation, require a second approver before activation, and record the rule-set version used by every run | M | US-316 |
 
 ## Statutory and Reporting
 | ID | Requirement | P | Story |
@@ -71,7 +77,7 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 | FR-401 | Generate SSS, PhilHealth, Pag-IBIG remittance files/reports | M | US-401 |
 | FR-402 | Generate BIR 1601-C, 1604-C and alphalist data | M | US-402 |
 | FR-403 | Generate BIR 2316 per employee | M | US-403 |
-| FR-404 | Generate bank payment files | M | US-404 |
+| FR-404 | Generate bank payment files (generic CSV in M3, bank templates in M4) | M | US-317, US-404 |
 | FR-405 | Export GL journals | S | US-405 |
 | FR-406 | Provide standard HR and payroll reports with export | M | US-406 |
 | FR-407 | Provide remittance deadline calendar and reminders | S | US-408 |
@@ -79,7 +85,7 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 ## Self-service and Workflow
 | ID | Requirement | P | Story |
 |---|---|---|---|
-| FR-501 | Configurable multi-step approvals with delegation and escalation | M | US-501 |
+| FR-501 | Configurable multi-step approvals with delegation and escalation (extends FR-213) | M | US-501 |
 | FR-502 | Employees may request changes to their profile; sensitive-field changes require approval | M | US-502 |
 | FR-503 | Notifications via email/in-app/push with user preferences | M | US-503 |
 | FR-504 | Employees view and download payslips, 2316, and leave balances | M | US-310 |
@@ -90,14 +96,14 @@ Priority: M/S/C. Story column links to [epics-and-stories](../01-product/epics-a
 | ID | Requirement | P | Story |
 |---|---|---|---|
 | FR-601 | Onboarding/offboarding checklists | M | US-601, US-603 |
-| FR-602 | Final pay computation per BR-OFF | M | US-604 |
-| FR-603 | Candidate pipeline and offer-to-hire handoff | S | US-606, US-607 |
+| FR-602 | Final pay computation per BR-OFF, including separation pay | M | US-604, US-609 |
+| FR-603 | Candidate pipeline and offer-to-hire handoff (post-GA, M7) | S | US-708, US-709 |
 | FR-604 | E-signature on documents | S | US-602 |
 
 ## Privacy and Admin
 | ID | Requirement | P | Story |
 |---|---|---|---|
-| FR-701 | Retention policy engine with scheduled anonymization/deletion with legal hold | M | US-805 |
-| FR-702 | Breach register and 72-hour notification workflow | M | US-805 |
-| FR-703 | Consent and notice log for optional processing | S | US-805 |
+| FR-701 | Retention policy engine with scheduled anonymization/deletion with legal hold | M | US-510 |
+| FR-702 | Breach register and 72-hour notification workflow | M | US-511 |
+| FR-703 | Consent and notice log for optional processing | S | US-512 |
 | FR-704 | Auditor read-only time-boxed access | S | US-409 |

@@ -33,11 +33,11 @@ Status: **proposed for owner review.** Nothing here changes code (there is none 
 - Seed: loaded into PostgreSQL via PGlite; 20 checks pass; four deliberate corruptions each made the matching check fail.
 - Contrast of every palette pair computed; accent `#D6401F` is 4.0:1 on paper (below 4.5:1), so it is limited to marks and large text, and `#B53217` (5.4:1) is used for small accent text.
 - HLD and UI preview rendered in headless Edge at desktop width and inspected; diagram label overflows found and fixed. Phone width was checked only partially (the headless window cannot go below about 500 px), so a real-device pass is still owed.
-- Links: the moved files' inbound links were repointed (epics, specs, LLD, access-control, docs README). A full link checker has not been run.
+- Links: inbound links to the moved files were repointed, and a relative-link check over all 91 Markdown files found 0 broken links.
 
 ## 4. Not done, for the owner
 - Review and approve or change C-01 to C-16 (HLD checklist in `hld.html`).
 - Decide whether SoD-1 should ever have an exception for a three-person firm.
 - Counsel review of the retention and role-based access wording is still open (OD-12, GAP-03).
-- A real-device mobile check, a full link check, and contrast verification of the final components once built.
+- A real-device mobile check, and contrast verification of the final components once built.
 - No statutory rate was added anywhere; every legal value stays tagged VERIFY.

@@ -1,0 +1,52 @@
+@import "tailwindcss";
+@import "../design-system/tokens.css";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--border);
+  --color-control: var(--border-control);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-soft: var(--neutral-bg);
+  --color-success: var(--success);
+  --color-success-tint: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-tint: var(--warning-bg);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-bg);
+  --color-info: var(--info);
+  --color-info-tint: var(--info-bg);
+  --color-neutral: var(--neutral);
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-mono);
+  --radius-control: var(--r-control);
+  --radius-dialog: var(--r-dialog);
+}
+
+html {
+  font-size: 14px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 14px/20px var(--font-ui);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

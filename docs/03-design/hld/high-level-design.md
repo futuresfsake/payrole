@@ -148,7 +148,7 @@ sequenceDiagram
   S-->>F: Run locked, files and payslips generated
 ```
 
-**Leave approval:** employee files (`leave:request`, scope self) → workflow routes to the manager of the effective-dated reporting line → manager approves (`leave:approve`, scope team) → ledger entry. If the requester is the approver (manager loop), SoD-2 routes to the next level or to `hr_admin`.
+**Leave approval:** employee files (`leave:request`, scope self) → workflow routes to the manager of the effective-dated reporting line → manager approves (`leave:approve`, scope team) → ledger entry. If the requester is the approver (for example an HR admin who is also a manager), SoD-2 routes to the next level or to `hr_admin`.
 
 ## 8. Cross-cutting concerns
 - **Authentication:** OIDC, short-lived tokens, server-side sessions (ADR-006).
@@ -162,7 +162,7 @@ sequenceDiagram
 ## 9. Data architecture and seed data
 PostgreSQL is the system of record. Normalised OLTP. Append-only: audit_log, time_log_raw, leave_ledger, role_assignment history, payroll_result after finalization. Detail: [data-model](../data-model.md).
 
-**Seed data** ([db/seed](../../../db/seed/README.md)): one fictional tenant ("Casa Verde Trading Corp.", 26 employees, 2 pay groups) with synthetic people only. It covers every role including multi-role users, a manager loop, a time-boxed auditor and one SoD exception, plus org tree, schedules, holidays, leave types and balances, pay periods, workflow definitions. It contains **no real statutory rates**: rule sets are placeholders tagged VERIFY. Fake identifiers use an unmistakable pattern (`DEV-`) so they can never be mistaken for real SSS, TIN, PhilHealth or Pag-IBIG numbers. Used by local development, tests and the UI preview.
+**Seed data** ([db/seed](../../../db/seed/README.md)): one fictional tenant ("Casa Verde Trading Corp.", 26 employees, 2 pay groups) with synthetic people only. It covers every role including multi-role users, a self-approval case, a time-boxed auditor and one SoD exception, plus org tree, schedules, holidays, leave types and balances, pay periods, workflow definitions. It contains **no real statutory rates**: rule sets are placeholders tagged VERIFY. Fake identifiers use an unmistakable pattern (`DEV-`) so they can never be mistaken for real SSS, TIN, PhilHealth or Pag-IBIG numbers. Used by local development, tests and the UI preview.
 
 ## 10. Deployment view
 ```mermaid

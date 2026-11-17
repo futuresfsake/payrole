@@ -28,6 +28,14 @@ erDiagram
   PAYROLL_RUN }o--o{ RULE_SET_VERSION : snapshots
   WORKFLOW_DEFINITION ||--o{ WORKFLOW_INSTANCE : instantiates
   TENANT ||--o{ AUDIT_LOG : records
+  TENANT ||--o{ USER_ACCOUNT : "signs in"
+  USER_ACCOUNT }o--o| EMPLOYEE : "linked to"
+  USER_ACCOUNT ||--o{ ROLE_ASSIGNMENT : holds
+  ROLE ||--o{ ROLE_ASSIGNMENT : granted_as
+  ROLE ||--o{ ROLE_PERMISSION : bundles
+  PERMISSION ||--o{ ROLE_PERMISSION : in
+  SOD_RULE ||--o{ SOD_EXCEPTION : "waived by"
+  ROLE_ASSIGNMENT }o--o| SOD_EXCEPTION : under
 ```
 
 ## Key table notes
@@ -43,6 +51,13 @@ erDiagram
 | payroll_result | `employee_id`, totals, `trace jsonb` (compressed), immutable after finalize (trigger) |
 | rule_set_version | `agency`, `type`, `effective_from`, `effective_to`, `data jsonb`, `source_citation`, `checksum`, `approved_by` |
 | audit_log | See LLD §6 |
+| user_account | Sign-in identity: `idp_subject`, `email`, `employee_id` nullable, `status`. One per human ([ADR-013](adr/ADR-013-multi-role-access-model.md)) |
+| role | `code`, `kind` (`derived`, `granted`, `platform`, `custom`), `default_scope`, `mfa_required`, `is_system`. System roles are global rows (`tenant_id` null, read-only); custom roles are per tenant |
+| permission | `code` (`resource:action`), `sensitivity` (S0 to S4), `needs_purpose`, `needs_step_up`. Global, read-only, versioned with the release |
+| role_permission | role to permission bundle, `field_mask jsonb` for masked access |
+| role_assignment | `user_id`, `role_id`, `scope_type`, `scope_ref`, `valid_from`, `valid_to`, `granted_by`, `approved_by`, `reason`, `status`, `sod_exception_id`. Effective-dated, append-only (end and re-create). EXCLUDE constraint prevents overlapping identical assignments |
+| sod_rule | `code` (SoD-1 …), `kind` (`static_pair`, `dynamic`), `role_a`, `role_b`, `exceptions_allowed` |
+| sod_exception | `rule_id`, `approved_by`, `expires_at` (≤ 90 days), `reason`; listed in the quarterly access review |
 
 ## Conventions
 - UUIDv7 primary keys (time-sortable).

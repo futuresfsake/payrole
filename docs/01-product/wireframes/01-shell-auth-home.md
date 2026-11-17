@@ -34,24 +34,27 @@
 ```
 Enrolment: QR + manual key, 8 recovery codes shown once with "Download" and "I saved them" checkbox required. Privileged roles cannot skip enrolment.
 
-## W-03 App shell (desktop)
+## W-03 App shell (desktop, multi-role)
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│ Acme Trading Corp.  [Search people, pages… ⌘K]      🔔3  H. Reyes ▾│
-├────────────┬─────────────────────────────────────────────────────┤
-│ Home       │  Page title                          [Primary action]│
-│ My space   │  ───────────────────────────────────────────────────│
-│ My team    │                                                     │
-│ People     │   content                                           │
-│ Time       │                                                     │
-│ Leave      │                                                     │
-│ Payroll    │                                                     │
-│ Reports    │                                                     │
-│ Privacy    │                                                     │
-│ Settings   │                                                     │
-└────────────┴─────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│ Acme Trading Corp.   [Search people, pages… ⌘K]            3  H. Reyes ▾│
+│ Me   Team   HR   Payroll                                                │
+│ ▀▀▀                                       (workspace strip: index tabs) │
+├────────────┬───────────────────────────────────────────────────────────┤
+│ HR         │ HR · all employees                    (scope chip)          │
+│ People     │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ │
+│ Onboarding │ People                                   [Add employee]     │
+│ Leave      │                                                             │
+│ Documents  │ content                                                     │
+│ Reports    │                                                             │
+└────────────┴───────────────────────────────────────────────────────────┘
 ```
-Nav items appear only if permitted. User menu: Profile, Sessions, Language, Sign out. Environment ribbon in staging ("Staging, synthetic data").
+- The **workspace strip** lists only workspaces backed by an active role assignment (Me, Team, HR, Payroll, Admin, Privacy, Audit). The current tab has a 3 px accent underline. A user with only the employee role sees no strip.
+- The **left rail** shows the navigation of the current workspace only.
+- The **scope chip** states the scope of the assignment in use (`HR · all employees`, `Team · 6 reports`, `Payroll · Semi-monthly pay group`).
+- The strip filters navigation; every action is authorized on the server using all active assignments ([ADR-013](../../03-design/adr/ADR-013-multi-role-access-model.md)).
+- If an assignment changes mid-session: banner "Your access changed. Reload to continue." and the session rotates.
+- User menu: Profile, Sessions, My roles (read-only list of assignments with scope and end date), Sign out. Environment ribbon in staging ("Staging, synthetic data").
 
 ## W-04 App shell (mobile ESS)
 ```

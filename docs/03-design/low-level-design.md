@@ -64,9 +64,12 @@ audit_log(id, tenant_id, seq, ts, actor_id, actor_type, action, entity, entity_i
 
 ## 7. Authorization
 - Permissions: `resource:action` (e.g. `compensation:read`, `payroll_run:approve`).
-- Scope resolver: SELF | TEAM | DEPARTMENT | COMPANY from reporting line as of today.
-- Policy function pure and unit-tested against the [RBAC matrix](../02-requirements/access/rbac-matrix.md) (matrix is machine-readable YAML; test generated from it).
-- SoD checks in domain layer (approver ≠ preparer, requester ≠ approver).
+- Model: [ADR-013](adr/ADR-013-multi-role-access-model.md). A user has many **role assignments** (role + scope + validity). Effective access is the union; derived roles `employee` and `manager` are computed per request, never stored.
+- Scope resolver: `self | team | org_unit | pay_group | tenant`. Team and org-unit scopes come from the effective-dated reporting line and org tree as of today. Resolved sets are cached per session and invalidated on any assignment, reporting-line or privilege change.
+- `authorize(actor, permission, resource, purpose?)` returns `ALLOW(fieldMask) | DENY(reason) | REQUIRE_STEP_UP | REQUIRE_PURPOSE`. Algorithm in [roles-and-permissions §5](../02-requirements/access/roles-and-permissions.md).
+- Policy function is pure and unit-tested against the [RBAC matrix](../02-requirements/access/rbac-matrix.md) (matrix is machine-readable, loaded from the seeded `permission` and `role_permission` tables; tests are generated from it).
+- Static SoD (forbidden role pairs) runs when an assignment is proposed or approved; dynamic SoD (approver ≠ preparer, requester ≠ approver) runs inside `authorize()`. Property tests try to violate each rule.
+- The UI workspace selector is a navigation filter only; the server never reads it.
 
 ## 8. Payroll engine (summary; see [TDD-payroll-engine](tdd/TDD-payroll-engine.md))
 Pure pipeline: `PayrollInput(snapshot) → steps[] → PayrollResult + Trace`. Steps are ordered, each pure: gross → premiums → taxable base → statutory → tax → loans → net. Output deterministic and hash-stamped.

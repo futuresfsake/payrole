@@ -9,6 +9,8 @@ export interface SodResult {
   rule?: ReasonCode;
   /** For a reroute: who it went to and why, in words. */
   reroutedTo?: string;
+  /** Plain words for this viewer. Overrides the generic rule text, which is written from the requester's side. */
+  explanation?: string;
 }
 
 export interface ApprovalBlockProps {
@@ -63,7 +65,7 @@ export function ApprovalBlock({ title, summary, requester, approver, status, req
         {rerouted ? (
           <div className="mt-4">
             <Alert tone="info" title={`Sent to ${sod?.reroutedTo ?? "the next approver"}`}>
-              {sod?.rule ? describeReason(sod.rule).body : "The usual approver can't decide this request."}
+              {sod?.explanation ?? (sod?.rule ? describeReason(sod.rule).body : "The usual approver can't decide this request.")}
             </Alert>
           </div>
         ) : null}

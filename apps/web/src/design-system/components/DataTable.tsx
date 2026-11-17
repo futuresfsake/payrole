@@ -129,7 +129,7 @@ export function DataTable<T>(props: DataTableProps<T>) {
       ) : data.length === 0 ? (
         <EmptyState {...empty} />
       ) : (
-        <div className="overflow-x-auto rounded-dialog border border-line bg-surface">
+        <div role="region" aria-label={caption} tabIndex={0} className="overflow-x-auto rounded-dialog border border-line bg-surface">
           <table className="w-full border-collapse">
             <caption className="sr-only">{caption}</caption>
             <thead className="sticky top-0 bg-bg">

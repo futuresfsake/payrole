@@ -1,0 +1,13 @@
+{
+  "name": "payrole-seed",
+  "private": true,
+  "type": "module",
+  "description": "Synthetic seed data generator and verifier for PayRole development",
+  "scripts": {
+    "generate": "node generate.mjs",
+    "verify": "node verify.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.16"
+  }
+}

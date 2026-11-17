@@ -41,3 +41,13 @@ Status: **proposed for owner review.** Nothing here changes code (there is none 
 - Counsel review of the retention and role-based access wording is still open (OD-12, GAP-03).
 - A real-device mobile check, and contrast verification of the final components once built.
 - No statutory rate was added anywhere; every legal value stays tagged VERIFY.
+
+## 5. Follow-up on branch `feat/frontend-design-system`
+| ID | Area | Before | After | Why |
+|---|---|---|---|---|
+| C-17 | Design language | ADR-014: Swiss style, paper, vermilion, Archivo, catalogue strip | ADR-015: calm business software, gray-50 and white, one blue accent, IBM Plex only, 6 px radius, Linear and Stripe character | Owner review: the first direction still looked generated; owner supplied a new visual brief |
+| C-18 | Control borders | gray-200 borders in the brief | gray-500 for controls (4.8:1), gray-200 for decoration only | gray-200 on white is 1.24:1, below the 3:1 rule for control boundaries |
+| C-19 | Money | numeric(19,4) in the data model | integer centavos for money, decimal strings for rates and factors | Owner decision; rates need 4 decimals |
+| C-20 | API for the first slice | none | MSW mock API from the seed plus a hand-written OpenAPI file | The backend does not exist yet |
+| C-21 | HLD page and UI preview | Swiss style with numbered headings, mono strips and a draft tag | Rebuilt in the ADR-015 style, none of the banned patterns | The brief bans them |
+| C-22 | Frontend | none | `src/design-system` plus `/catalogue`, then one vertical slice | Build order from the brief |

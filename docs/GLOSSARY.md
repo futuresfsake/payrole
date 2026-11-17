@@ -54,3 +54,13 @@
 | Alphalist | Annual list of employees and tax withheld, attached to 1604-C |
 | RMC / RR / RA / PD | Revenue Memorandum Circular / Revenue Regulation / Republic Act / Presidential Decree |
 | PayRole | Product name (provisional pending trademark check, OD-15) |
+| Role assignment | A grant of one role to one user account with a scope, validity dates, grantor, approver and reason. The unit of access (ADR-013) |
+| Derived role | A role computed from facts rather than granted: `employee` (linked to an active employee) and `manager` (has reports) |
+| Scope | Where a permission applies: self, team, org unit, pay group or tenant |
+| Workspace | A UI lens (Me, Team, HR, Payroll, Admin, Privacy, Audit, Dashboards) that filters navigation; never a security control |
+| Static SoD | Forbidden role pairs, rejected when an assignment is proposed |
+| Dynamic SoD | Object-level rules checked at action time, such as no self-approval |
+| SoD exception | A recorded, second-approved, time-boxed (90 days at most) waiver of SoD-5 or SoD-6 |
+| Bootstrap assignment | The first tenant-admin assignment(s), created at tenant provisioning without a proposer or approver |
+| Catalogue strip | The mono line at the top of every record page, for example `EMP-0042 · 201 FILE · ACTIVE` (ADR-014) |
+| Seed data | Synthetic development data (`db/seed`); never real people or real statutory rates |

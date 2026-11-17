@@ -32,30 +32,34 @@ h3{font-size:16px;line-height:24px}
 h4{font-size:14px;line-height:20px}
 .skip{position:absolute;left:-999px;top:8px;background:var(--text);color:var(--surface);padding:8px 16px;z-index:10;border-radius:var(--r-control)}
 .skip:focus{left:8px}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:var(--r-control);font-size:12px;line-height:16px;font-weight:600}
-.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.badge.success{color:var(--success);background:var(--success-bg)} .badge.warning{color:var(--warning);background:var(--warning-bg)} .badge.danger{color:var(--danger);background:var(--danger-bg)} .badge.info{color:var(--info);background:var(--info-bg)} .badge.neutral{color:var(--neutral);background:var(--neutral-bg)}
+.badge{display:inline-flex;align-items:center;gap:var(--s-2);font-size:13px;line-height:20px;white-space:nowrap}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.badge.success{color:var(--success)} .badge.warning{color:var(--warning)} .badge.danger{color:var(--danger)} .badge.info{color:var(--info)} .badge.neutral{color:var(--neutral)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 body{min-height:100vh;display:grid;grid-template-rows:48px 1fr}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .top{display:flex;align-items:center;gap:var(--s-5);padding:0 var(--s-5);background:var(--surface);border-bottom:1px solid var(--border)}
 .brand{font-weight:600;white-space:nowrap}
-.ws{display:flex;gap:var(--s-1);height:100%;overflow-x:auto}
-.ws button{border:0;background:transparent;color:var(--text-muted);font:600 14px/20px var(--f-ui);padding:0 var(--s-3);height:100%;border-bottom:2px solid transparent;cursor:pointer;transition:color var(--t-fast)}
-.ws button:hover{color:var(--text)}
-.ws button[aria-current=true]{color:var(--text);border-bottom-color:var(--accent)}
-.top .grow{flex:1}
+.ws{display:flex;gap:var(--s-1);height:100%;align-items:stretch}
+.ws button{position:relative;border:0;background:transparent;color:var(--text);font:400 14px/20px var(--f-ui);padding:0 var(--s-4);cursor:pointer;transition:background var(--t-fast)}
+.ws button:hover{background:var(--neutral-bg)}
+.ws button[aria-current=true]{background:var(--neutral-bg)}
+.ws button[aria-current=true]::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent)}
+.grow{flex:1}
 .search{width:240px;border:1px solid var(--border-control);border-radius:var(--r-control);padding:4px var(--s-3);min-height:32px;font:400 14px var(--f-ui);background:var(--surface);color:var(--text)}
 .iconbtn{border:0;background:transparent;width:32px;height:32px;border-radius:var(--r-control);display:grid;place-items:center;color:var(--text-muted);cursor:pointer}
 .iconbtn:hover{background:var(--neutral-bg);color:var(--text)}
-svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .who{display:flex;align-items:center;gap:var(--s-2);color:var(--text-muted)}
-.who select{font:400 14px var(--f-ui);border:1px solid var(--border-control);border-radius:var(--r-control);padding:4px var(--s-2);min-height:32px;background:var(--surface);color:var(--text)}
+.who select,select.sel{font:400 14px var(--f-ui);border:1px solid var(--border-control);border-radius:var(--r-control);padding:4px var(--s-2);min-height:32px;background:var(--surface);color:var(--text)}
 .body{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:0}
 .side{background:var(--surface);border-right:1px solid var(--border);padding:var(--s-4) var(--s-3)}
-.side a{display:flex;align-items:center;gap:var(--s-2);padding:6px var(--s-3);border-radius:var(--r-control);color:var(--text-muted);cursor:pointer;text-decoration:none}
-.side a:hover{background:var(--neutral-bg);color:var(--text)}
-.side a[aria-current=true]{background:var(--accent-tint);color:var(--accent-hover);font-weight:600}
+.side a{position:relative;display:flex;align-items:center;gap:var(--s-3);width:100%;padding:6px var(--s-3);border-radius:var(--r-control);color:var(--text);cursor:pointer;text-decoration:none}
+.side a svg{color:var(--text-muted)}
+.side a:hover{background:var(--neutral-bg)}
+.side a[aria-current=true]{background:var(--neutral-bg)}
+.side a[aria-current=true] svg{color:var(--accent)}
+.side a[aria-current=true]::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--accent);border-radius:1px}
 .scope{color:var(--text-muted);padding:0 var(--s-3) var(--s-3)}
 main{padding:var(--s-5);min-width:0}
 .page{max-width:1280px}
@@ -66,40 +70,69 @@ main{padding:var(--s-5);min-width:0}
 .btn.primary{background:var(--accent);color:#fff;border:1px solid var(--accent)} .btn.primary:hover{background:var(--accent-hover)}
 .btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--border-control)} .btn.secondary:hover{background:var(--neutral-bg)}
 .btn:disabled{background:var(--neutral-bg);border-color:var(--border);color:var(--text-muted);cursor:not-allowed}
+.btn.sm{min-height:24px;padding:0 var(--s-3)}
+.grid2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:var(--s-5)}
+.block{margin-bottom:var(--s-5)}
+.block>h2{font-size:16px;line-height:24px;margin-bottom:var(--s-3);display:flex;justify-content:space-between;align-items:baseline}
+.block>h2 span{font-weight:400;color:var(--text-muted);font-size:14px}
 .tw{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-dialog)}
+.list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-dialog)}
+.list>div{display:flex;justify-content:space-between;gap:var(--s-4);padding:var(--s-3) var(--s-4);align-items:center}
+.list>div+div{border-top:1px solid var(--border)}
+.list small{display:block;color:var(--text-muted);font-size:13px}
 table{border-collapse:collapse;width:100%}
 th{font-weight:600;text-align:left;color:var(--text-muted);background:var(--bg);border-bottom:1px solid var(--border);padding:0 var(--s-4);height:40px;white-space:nowrap}
-td{padding:0 var(--s-4);height:40px;border-bottom:1px solid var(--border)}
+td{padding:0 var(--s-4);height:40px;border-bottom:1px solid var(--border);white-space:nowrap}
 tr:last-child td{border-bottom:0}
 th.n,td.n{text-align:right;font-family:var(--f-mono);font-size:13px}
-tbody tr.row{cursor:pointer} tbody tr.row:hover td{background:var(--bg)}
+tbody tr.row{cursor:pointer;position:relative}
+tbody tr.row:hover td{background:var(--bg)}
+tbody tr.row.sel td{background:var(--neutral-bg)}
+tbody tr.row.sel td:first-child{box-shadow:inset 2px 0 0 var(--accent)}
 tbody tr.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.cap{color:var(--text-muted);margin:0 0 var(--s-2)}
+tr.total td{background:var(--bg);font-weight:600}
+.mask{font-family:var(--f-mono);font-size:13px}
+.cap{color:var(--text-muted);margin:var(--s-2) 0 0}
+.toolbar{display:flex;gap:var(--s-3);flex-wrap:wrap;align-items:center;margin-bottom:var(--s-3)}
+.toolbar .search{width:260px}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:var(--s-3);color:var(--text-muted)}
 .sk{height:40px;border-bottom:1px solid var(--border);background:var(--surface)}
 .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-dialog);padding:var(--s-5);margin-top:var(--s-4)}
 .panel h2{font-size:16px;line-height:24px;margin-bottom:var(--s-2)}
 dl.def{display:grid;grid-template-columns:200px minmax(0,1fr);margin:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-dialog)}
 dl.def dt,dl.def dd{margin:0;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--border)}
 dl.def dt{color:var(--text-muted)} dl.def>*:nth-last-child(-n+2){border-bottom:0}
-.mask{font-family:var(--f-mono);font-size:13px}
-.tl{list-style:none;margin:var(--s-3) 0 0;padding:0;display:flex;gap:var(--s-2);flex-wrap:wrap}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:var(--s-4)}
+.tabs button{position:relative;background:transparent;border:0;padding:var(--s-3) var(--s-4);font:400 14px/20px var(--f-ui);color:var(--text);cursor:pointer;transition:background var(--t-fast)}
+.tabs button:hover{background:var(--neutral-bg)}
+.tabs button[aria-selected=true]{background:var(--neutral-bg)}
+.tabs button[aria-selected=true]::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
+.tl{list-style:none;margin:0 0 var(--s-4);padding:0;display:flex;gap:var(--s-2);flex-wrap:wrap}
 .tl li{flex:1 1 140px;border-top:2px solid var(--border);padding-top:var(--s-2);color:var(--text-muted)}
-.tl li.done{border-top-color:var(--success);color:var(--text)} .tl li.cur{border-top-color:var(--accent);color:var(--text);font-weight:600}
-.alert{display:flex;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-radius:var(--r-control);margin:var(--s-4) 0}
-.alert.danger{background:var(--danger-bg);color:var(--danger)} .alert.warning{background:var(--warning-bg);color:var(--warning)} .alert.info{background:var(--info-bg);color:var(--info)}
+.tl li.done{border-top-color:var(--success);color:var(--text)} .tl li.cur{border-top-color:var(--accent);color:var(--text)}
+.alert{display:flex;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-radius:var(--r-control);margin:0 0 var(--s-4);border:1px solid var(--border);background:var(--surface);border-left-width:3px}
+.alert.danger{border-left-color:var(--danger)} .alert.warning{border-left-color:var(--warning)} .alert.info{border-left-color:var(--info)}
+.alert svg{margin-top:2px}
+.alert.danger svg{color:var(--danger)} .alert.warning svg{color:var(--warning)} .alert.info svg{color:var(--info)}
 .alert b{display:block}
 .dlg-back{position:fixed;inset:0;background:rgba(17,24,39,.4);display:grid;place-items:center;padding:var(--s-4)}
 .dlg{background:var(--surface);border-radius:var(--r-dialog);padding:var(--s-5);width:min(440px,100%);box-shadow:0 10px 30px rgba(17,24,39,.2)}
 .dlg h2{margin-bottom:var(--s-2)}
-.dlg select{width:100%;margin:var(--s-2) 0 var(--s-4);font:400 14px var(--f-ui);border:1px solid var(--border-control);border-radius:var(--r-control);padding:6px var(--s-3);min-height:32px;background:var(--surface);color:var(--text)}
+.dlg select{width:100%;margin:var(--s-2) 0 var(--s-4)}
 .dlg .acts{display:flex;gap:var(--s-2);justify-content:flex-end}
+.ap{display:grid;grid-template-columns:minmax(0,1fr) 260px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-dialog)}
+.ap>div{padding:var(--s-4) var(--s-5)} .ap>div+div{border-left:1px solid var(--border)}
+.ap h3{font-size:14px;margin-bottom:var(--s-1)}
+.ap p{margin:0 0 var(--s-2);color:var(--text-muted)}
+.chk{display:flex;gap:var(--s-2);align-items:center;min-height:32px}
+.chk input{width:16px;height:16px;accent-color:var(--accent)}
+.ph{color:var(--warning)}
 .empty{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-dialog);padding:var(--s-6);max-width:560px}
 .empty h2{font-size:16px;margin-bottom:var(--s-2)} .empty p{color:var(--text-muted);margin:0 0 var(--s-4)}
-.ph{color:var(--warning)}
 @media (max-width:900px){
- body{grid-template-rows:auto 1fr}.top{flex-wrap:wrap;height:auto;padding:var(--s-2) var(--s-4);gap:var(--s-2)}.ws{order:3;width:100%;height:40px}.search{display:none}
- .body{display:block}.side{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--border);padding:var(--s-2)}.scope{display:none}.side a{white-space:nowrap}
- main{padding:var(--s-4)} dl.def{display:block} dl.def dt{border-bottom:0;padding-bottom:0}
+ body{grid-template-rows:auto 1fr}.top{flex-wrap:wrap;height:auto;padding:var(--s-2) var(--s-4);gap:var(--s-2)}.ws{order:3;width:100%;height:40px;overflow-x:auto}.search{display:none}
+ .body{display:block}.side{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--border);padding:var(--s-2)}.scope{display:none}.side a{white-space:nowrap;width:auto}
+ main{padding:var(--s-4)} dl.def{display:block} dl.def dt{border-bottom:0;padding-bottom:0} .grid2{display:block} .ap{display:block}.ap>div+div{border-left:0;border-top:1px solid var(--border)}
 }</style></head><body>
 <header class="top"><span class="brand">Casa Verde Trading Corp.</span><nav class="ws" id="ws" aria-label="Workspaces"></nav><span class="grow"></span>
 <input class="search" type="search" aria-label="Search people and pages" placeholder="Search people and pages">
@@ -107,84 +140,139 @@ dl.def dt{color:var(--text-muted)} dl.def>*:nth-last-child(-n+2){border-bottom:0
 <label class="who">View as <select id="who"></select></label></header>
 <div class="body"><nav class="side" id="side" aria-label="Pages"></nav><main><div class="page" id="content"></div></main></div>
 <script>
-const IC={bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',check:'<path d="M20 6 9 17l-5-5"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',x:'<path d="M18 6 6 18M6 6l12 12"/>',eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>'};
+const PEOPLE=[{"no":"EMP-0001","name":"Casa, Rico","dept":"Executive Office","pos":"General Manager","type":"regular","status":"active","mgr":null},{"no":"EMP-0002","name":"Reyes, Hana","dept":"HR and Admin","pos":"HR Lead","type":"regular","status":"active","mgr":"EMP-0001"},{"no":"EMP-0003","name":"Lim, Faye","dept":"Finance","pos":"Finance Controller","type":"regular","status":"active","mgr":"EMP-0001"},{"no":"EMP-0004","name":"Bautista, Ines","dept":"IT and Systems","pos":"IT and Systems Lead","type":"regular","status":"active","mgr":"EMP-0001"},{"no":"EMP-0005","name":"Dizon, Marco","dept":"Operations","pos":"Operations Manager","type":"regular","status":"active","mgr":"EMP-0001"},{"no":"EMP-0006","name":"Santos, Paolo","dept":"Finance","pos":"Payroll Officer","type":"regular","status":"active","mgr":"EMP-0003"},{"no":"EMP-0007","name":"Ramos, Dante","dept":"HR and Admin","pos":"HR Clerk","type":"regular","status":"active","mgr":"EMP-0002"},{"no":"EMP-0008","name":"Tan, Bea","dept":"Finance","pos":"Accounting Clerk","type":"regular","status":"active","mgr":"EMP-0003"},{"no":"EMP-0009","name":"Pineda, Ana","dept":"Finance","pos":"Accounting Clerk","type":"regular","status":"active","mgr":"EMP-0003"},{"no":"EMP-0010","name":"Aquino, Noel","dept":"IT and Systems","pos":"IT Support","type":"regular","status":"active","mgr":"EMP-0004"},{"no":"EMP-0011","name":"Lee, Sofia","dept":"Sales","pos":"Sales Supervisor","type":"regular","status":"active","mgr":"EMP-0005"},{"no":"EMP-0012","name":"Villanueva, Ena","dept":"Sales","pos":"Sales Associate","type":"regular","status":"active","mgr":"EMP-0011"},{"no":"EMP-0013","name":"Torres, Mika","dept":"Sales","pos":"Sales Associate","type":"regular","status":"active","mgr":"EMP-0011"},{"no":"EMP-0014","name":"Mercado, Jun","dept":"Sales","pos":"Sales Associate","type":"regular","status":"active","mgr":"EMP-0011"},{"no":"EMP-0015","name":"Navarro, Tess","dept":"Sales","pos":"Customer Service Representative","type":"regular","status":"active","mgr":"EMP-0011"},{"no":"EMP-0016","name":"Salonga, Vince","dept":"Sales","pos":"Sales Associate","type":"regular","status":"active","mgr":"EMP-0011"},{"no":"EMP-0017","name":"Ortega, Sam","dept":"Sales","pos":"Sales Associate","type":"regular","status":"active","mgr":"EMP-0011"},{"no":"EMP-0018","name":"Padilla, Rey","dept":"Warehouse and Logistics","pos":"Warehouse Supervisor","type":"regular","status":"active","mgr":"EMP-0005"},{"no":"EMP-0019","name":"Garcia, Luis","dept":"Warehouse and Logistics","pos":"Warehouse Staff","type":"probationary","status":"probationary","mgr":"EMP-0018"},{"no":"EMP-0020","name":"Cruz, Anton","dept":"Warehouse and Logistics","pos":"Warehouse Staff","type":"regular","status":"active","mgr":"EMP-0018"},{"no":"EMP-0021","name":"Cruz, Joel","dept":"Warehouse and Logistics","pos":"Driver","type":"contractual","status":"active","mgr":"EMP-0018"},{"no":"EMP-0022","name":"Ocampo, Gina","dept":"Warehouse and Logistics","pos":"Driver","type":"regular","status":"active","mgr":"EMP-0018"},{"no":"EMP-0023","name":"Bernardo, Lito","dept":"Warehouse and Logistics","pos":"Warehouse Staff","type":"regular","status":"active","mgr":"EMP-0018"},{"no":"EMP-0024","name":"Dela Cruz, Carlo","dept":"Warehouse and Logistics","pos":"Warehouse Staff","type":"regular","status":"separated","mgr":"EMP-0018"},{"no":"EMP-0025","name":"Villar, Mara","dept":"Operations","pos":"Operations Assistant","type":"regular","status":"active","mgr":"EMP-0005"},{"no":"EMP-0026","name":"Lacson, Pia","dept":"Executive Office","pos":"Executive Assistant","type":"regular","status":"active","mgr":"EMP-0001"}];
+const IC={bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
+home:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/>',file:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 7M18 20a7 7 0 0 0-3-5.7"/>',check:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/>',userplus:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/>',chart:'<path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/>',play:'<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/>',bank:'<path d="M3 10 12 4l9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/>',download:'<path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/>',money:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/>',inbox:'<path d="M4 13 6 5h12l2 8v6H4z"/><path d="M4 13h5l1 2h4l1-2h5"/>',shield:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/>',archive:'<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11h14V8M10 12h4"/>',key:'<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M16 7l3 3"/>',flow:'<circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h6a4 4 0 0 1 4 4v6"/>',scroll:'<path d="M8 4h11v13a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1z"/><path d="M9 9h6M9 13h6"/>',flask:'<path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 19l-6-10V3"/>'};
 const ic=n=>'<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[n]+'</svg>';
+const PICON={Home:'home',Payslips:'file',Leave:'cal',Attendance:'clock',Profile:'user',Approvals:'check','Team calendar':'cal',People:'users',Onboarding:'userplus','Leave policy':'file',Reports:'chart',Runs:'play',Loans:'bank','Statutory files':'download',Headcount:'users','Payroll cost':'money',Requests:'inbox','Breach log':'shield',Retention:'archive',Users:'users','Role assignments':'key','Access preview':'flask',Workflow:'flow','Audit log':'scroll'};
 const P={
- ena:{name:'Ena Villanueva',ws:['Me']},
- marco:{name:'Marco Dizon',ws:['Me','Team']},
- hana:{name:'Hana Reyes',ws:['Me','Team','HR']},
- paolo:{name:'Paolo Santos',ws:['Me','Payroll']},
- faye:{name:'Faye Lim',ws:['Me','Payroll']},
- rico:{name:'Rico Casa',ws:['Me','Dashboards','Privacy','Audit']},
- ines:{name:'Ines Bautista',ws:['Me','Admin','Audit']}
+ ena:{name:'Ena Villanueva',ws:['Me'],bal:[6.5,7]},
+ marco:{name:'Marco Dizon',ws:['Me','Team'],bal:[15,5]},
+ hana:{name:'Hana Reyes',ws:['Me','Team','HR'],bal:[15,7]},
+ paolo:{name:'Paolo Santos',ws:['Me','Payroll'],bal:[15,7]},
+ faye:{name:'Faye Lim',ws:['Me','Payroll'],bal:[12,7]},
+ rico:{name:'Rico Casa',ws:['Me','Dashboards','Privacy','Audit'],bal:[15,7]},
+ ines:{name:'Ines Bautista',ws:['Me','Admin','Audit'],bal:[15,7]}
 };
-const NAV={Me:['Home','Payslips','Leave','Attendance','Profile'],Team:['Approvals','Team calendar'],HR:['People','Onboarding','Leave policy','Reports'],Payroll:['Runs','Loans','Statutory files'],Dashboards:['Headcount','Payroll cost'],Privacy:['Requests','Breach log','Retention'],Admin:['Users','Role assignments','Workflow'],Audit:['Audit log']};
+const NAV={Me:['Home','Payslips','Leave','Attendance','Profile'],Team:['Approvals','Team calendar'],HR:['People','Onboarding','Leave policy','Reports'],Payroll:['Runs','Loans','Statutory files'],Dashboards:['Headcount','Payroll cost'],Privacy:['Requests','Breach log','Retention'],Admin:['Users','Role assignments','Access preview','Workflow'],Audit:['Audit log']};
 const SCOPE={Me:'Your own records',Team:'Team: 6 reports',HR:'All employees',Payroll:'Semi-monthly and monthly pay groups',Dashboards:'Totals only, individual data masked',Privacy:'Whole company',Admin:'Whole company, no HR or pay data',Audit:'Read only'};
-const EMP=[['EMP-0002','Reyes, Hana','HR and Admin','HR Lead','Regular','success','Active'],['EMP-0005','Dizon, Marco','Operations','Operations Manager','Regular','success','Active'],['EMP-0012','Villanueva, Ena','Sales','Sales Associate','Regular','success','Active'],['EMP-0019','Garcia, Luis','Warehouse','Warehouse Staff','Probationary','warning','Probation to 31 Dec'],['EMP-0008','Tan, Bea','Finance','Accounting Clerk','Regular','success','Active'],['EMP-0021','Cruz, Joel','Warehouse','Driver','Contractual','info','Contract ends 31 Dec']];
-const MGR={'EMP-0002':'Casa, Rico','EMP-0005':'Casa, Rico','EMP-0012':'Lee, Sofia','EMP-0019':'Padilla, Rey','EMP-0008':'Lim, Faye','EMP-0021':'Padilla, Rey'};
 const badge=(k,t)=>'<span class="badge '+k+'">'+t+'</span>';
+const STAT={active:['success','Active'],probationary:['warning','Probation'],separated:['neutral','Separated']};
 const php=c=>(c<0?'−':'')+'₱'+(Math.abs(c)/100).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
 const TABLE=new Set(['HR/People','Me/Payslips','Payroll/Runs','Admin/Role assignments']);
-let cur='ena',ws='Me',page='Home',sel=null,loading=false,timer=null,dlg=false,shown=false;
+let cur='ena',ws='Me',page='Home',sel=null,loading=false,timer=null,dlg=false,shown=false,tab='Assignments',dept='',stat='',query='',pg=0,rows=[],hi=null;
 const $=id=>document.getElementById(id);
 function nav(){loading=true;draw();clearTimeout(timer);timer=setTimeout(()=>{loading=false;draw()},300)}
 function head(title,desc,action){return '<div class="crumb">'+ws+' / '+page+'</div><div class="head"><div><h1>'+title+'</h1>'+(desc?'<p>'+desc+'</p>':'')+'</div>'+(action||'')+'</div>'}
-function skeleton(){return head(page,'Loading…')+'<div role="status" class="tw" aria-label="Loading '+page+'">'+Array.from({length:6},()=>'<div class="sk"></div>').join('')+'</div>'}
+function skeleton(){return head(page,'Loading…')+'<div role="status" class="tw" aria-label="Loading '+page+'">'+Array.from({length:7},()=>'<div class="sk"></div>').join('')+'</div>'}
 function forbidden(){return head('You can\'t open this page','')+'<div class="alert danger">'+ic('lock')+'<div><b>No permission in this scope</b>Your roles don\'t include access to the '+ws+' workspace. Ask a company admin to propose a role assignment if you need it. Reason code: NO_PERMISSION_IN_SCOPE.</div></div>'}
 function draw(){
  const u=P[cur];
  $('ws').innerHTML=u.ws.length>1?u.ws.map(w=>'<button type="button" data-ws="'+w+'"'+(w===ws?' aria-current="true"':'')+'>'+w+'</button>').join(''):'<button type="button" aria-current="true">Me</button>';
  const sw=u.ws.includes(ws)?ws:u.ws[0];
- $('side').innerHTML='<div class="scope">'+(SCOPE[sw]||'')+'</div>'+(NAV[sw]||[]).map(p=>'<a tabindex="0" role="link" data-p="'+p+'"'+(p===page&&sw===ws?' aria-current="true"':'')+'>'+p+'</a>').join('');
+ $('side').innerHTML='<div class="scope">'+(SCOPE[sw]||'')+'</div>'+(NAV[sw]||[]).map(p=>'<a tabindex="0" role="link" data-p="'+p+'"'+(p===page&&sw===ws?' aria-current="true"':'')+'>'+ic(PICON[p]||'file')+p+'</a>').join('');
  $('content').setAttribute('aria-busy',loading);
  $('content').innerHTML=(!u.ws.includes(ws))?forbidden():(loading&&TABLE.has(ws+'/'+page)?skeleton():view())+(dlg?dialog():'');
 }
-function dialog(){return '<div class="dlg-back" role="dialog" aria-modal="true" aria-labelledby="dt"><div class="dlg"><h2 id="dt">Show the full SSS number</h2><p>Confirm it is you, and say why you need the number. Your reason is saved in the audit log.</p><label for="why">Reason</label><select id="why"><option>Payroll check</option><option>Government filing</option><option>Employee request</option></select><div class="acts"><button class="btn secondary" data-cancel>Cancel</button><button class="btn primary" data-confirm>Confirm with passkey</button></div></div></div>'}
+function dialog(){return '<div class="dlg-back" role="dialog" aria-modal="true" aria-labelledby="dt"><div class="dlg"><h2 id="dt">Show the full SSS number</h2><p>Confirm it is you, and say why you need the number. Your reason is saved in the audit log.</p><label for="why">Reason</label><select id="why" class="sel"><option>Payroll check</option><option>Government filing</option><option>Employee request</option></select><div class="acts"><button class="btn secondary" data-cancel>Cancel</button><button class="btn primary" data-confirm>Confirm with passkey</button></div></div></div>'}
+function filtered(){return PEOPLE.filter(p=>(!dept||p.dept===dept)&&(!stat||p.status===stat)&&(!query||(p.name+p.no).toLowerCase().includes(query.toLowerCase())))}
+function peopleView(){
+ const all=filtered();const per=10;const pages=Math.max(1,Math.ceil(all.length/per));if(pg>=pages)pg=0;const slice=all.slice(pg*per,pg*per+per);rows=slice;
+ const depts=[...new Set(PEOPLE.map(p=>p.dept))];
+ return head('People',PEOPLE.length+' employees in Casa Verde Trading Corp.','<button class="btn primary">Add employee</button>')
+ +'<div class="toolbar"><input class="search" type="search" id="q" aria-label="Filter people" placeholder="Filter by name or number" value="'+query.replace(/"/g,'')+'"><select class="sel" id="dept" aria-label="Department"><option value="">All departments</option>'+depts.map(d=>'<option'+(d===dept?' selected':'')+'>'+d+'</option>').join('')+'</select><select class="sel" id="stat" aria-label="Status"><option value="">Any status</option><option value="active"'+(stat==='active'?' selected':'')+'>Active</option><option value="probationary"'+(stat==='probationary'?' selected':'')+'>Probation</option><option value="separated"'+(stat==='separated'?' selected':'')+'>Separated</option></select><span class="grow"></span><button class="btn secondary" disabled title="Export needs a reason and a passkey check">Export CSV</button></div>'
+ +(all.length?'<div class="tw"><table><thead><tr><th>No.</th><th>Name</th><th>Department</th><th>Position</th><th>Type</th><th>Status</th></tr></thead><tbody>'+slice.map((p,i)=>'<tr class="row'+(hi===p.no?' sel':'')+'" tabindex="0" data-row="'+i+'"><td class="mask">'+p.no+'</td><td>'+p.name+'</td><td>'+p.dept+'</td><td>'+p.pos+'</td><td>'+p.type[0].toUpperCase()+p.type.slice(1)+'</td><td>'+badge(STAT[p.status][0],STAT[p.status][1])+'</td></tr>').join('')+'</tbody></table></div>'
+ +'<div class="pager"><span>'+(pg*per+1)+'–'+(pg*per+slice.length)+' of '+all.length+'</span><span><button class="btn secondary sm" data-pg="-1"'+(pg===0?' disabled':'')+'>Previous</button> <button class="btn secondary sm" data-pg="1"'+(pg>=pages-1?' disabled':'')+'>Next</button></span></div>'
+ :'<div class="empty"><h2>No one matches those filters</h2><p>Clear the department or status filter, or check the spelling of the name.</p><button class="btn secondary" data-clear>Clear filters</button></div>');
+}
+function recordView(p){return head(p.name,p.no+' · '+p.pos,'<button class="btn secondary" data-back>All people</button>')
+ +'<dl class="def"><dt>Status</dt><dd>'+badge(STAT[p.status][0],STAT[p.status][1])+'</dd><dt>Department</dt><dd>'+p.dept+'</dd><dt>Employment</dt><dd>'+p.type[0].toUpperCase()+p.type.slice(1)+', full time</dd><dt>Reports to</dt><dd>'+(p.mgr?PEOPLE.find(x=>x.no===p.mgr).name:'No manager (top of the reporting line)')+'</dd><dt>Pay group</dt><dd>'+(['Executive Office','HR and Admin','Finance','IT and Systems'].includes(p.dept)?'Monthly (office)':'Semi-monthly (operations)')+'</dd><dt>Monthly rate</dt><dd class="mask">'+php(3250000)+'</dd>'
+ +'<dt>SSS number</dt><dd>'+(shown?'<span class="mask">DEV-SSS-'+p.no.slice(4)+'-4821</span> <span style="color:var(--text-muted)">Shown for 30 seconds. Your reason is in the audit log.</span>':'<span class="mask">DEV-SSS-····-4821</span> <button class="btn secondary sm" style="margin-left:var(--s-2)" data-reveal>'+ic('eye')+'Show full number</button> '+badge('neutral','S3 sensitive'))+'</dd>'
+ +'<dt>Medical notes</dt><dd style="color:var(--text-muted)">Not shown. Only HR records staff can open these.</dd></dl>'}
 function view(){
- const k=ws+'/'+page;
- if(k==='HR/People'){
-  if(sel!==null){const e=EMP[sel];
-   return head(e[1],e[0]+' · '+e[3],'<button class="btn secondary" data-back>All people</button>')
-   +'<dl class="def"><dt>Status</dt><dd>'+badge(e[5],e[6])+'</dd><dt>Department</dt><dd>'+e[2]+'</dd><dt>Employment</dt><dd>'+e[4]+', full time</dd><dt>Reports to</dt><dd>'+MGR[e[0]]+'</dd><dt>Pay group</dt><dd>'+(e[2]==='HR and Admin'||e[2]==='Finance'?'Monthly (office)':'Semi-monthly (operations)')+'</dd><dt>Monthly rate</dt><dd class="mask">'+php(3250000)+'</dd>'
-   +'<dt>SSS number</dt><dd>'+(shown?'<span class="mask">DEV-SSS-'+e[0].slice(4)+'-4821</span> <span style="color:var(--text-muted)">Shown for 30 seconds. Your reason is in the audit log.</span>':'<span class="mask">DEV-SSS-····-4821</span> <button class="btn secondary" style="min-height:24px;padding:0 var(--s-3);margin-left:var(--s-2)" data-reveal>'+ic('eye')+'Show full number</button> '+badge('neutral','S3 sensitive'))+'</dd>'
-   +'<dt>Medical notes</dt><dd style="color:var(--text-muted)">Not shown. Only HR records staff can open these.</dd></dl>';}
-  return head('People','26 employees in Casa Verde Trading Corp.','<button class="btn primary">Add employee</button>')
-   +'<div class="tw"><table><thead><tr><th>No.</th><th>Name</th><th>Department</th><th>Position</th><th>Type</th><th>Status</th></tr></thead><tbody>'+EMP.map((e,i)=>'<tr class="row" tabindex="0" data-row="'+i+'"><td class="mask">'+e[0]+'</td><td>'+e[1]+'</td><td>'+e[2]+'</td><td>'+e[3]+'</td><td>'+e[4]+'</td><td>'+badge(e[5],e[6])+'</td></tr>').join('')+'</tbody></table></div><p class="cap" style="margin-top:var(--s-2)">Showing 6 of 26. Open a row to see the full record.</p>';
- }
- if(k==='Me/Payslips'){return head('Payslips','Your pay for each period. Amounts are placeholders from seed data.')+'<div class="tw"><table><thead><tr><th>Period</th><th class="n">Gross</th><th class="n">Deductions</th><th class="n">Net pay</th><th>Status</th></tr></thead><tbody>'+[['16–31 Oct 2026',1625000,-291438,1333562],['1–15 Oct 2026',1625000,-291438,1333562],['16–30 Sep 2026',1625000,-291438,1333562]].map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+php(r[1])+'</td><td class="n">'+php(r[2])+'</td><td class="n">'+php(r[3])+'</td><td>'+badge('success','Paid')+'</td></tr>').join('')+'</tbody></table></div><p class="cap ph" style="margin-top:var(--s-2)">Placeholder values. Statutory deductions are not verified.</p>';}
- if(k==='Team/Approvals'){return head('Approvals','Requests from the people who report to you.')
-  +'<div class="panel"><h2>Leave request from Ena Villanueva</h2><p style="color:var(--text-muted)">Vacation leave, 22 to 24 Dec 2026 (3 days). Balance after approval: 4.5 days. Filed 14 Nov.</p><div style="display:flex;gap:var(--s-2)"><button class="btn primary">Approve leave</button><button class="btn secondary">Return to Ena</button></div></div>'
+ const k=ws+'/'+page,u=P[cur];
+ if(k==='HR/People'){return sel!==null?recordView(sel):peopleView()}
+ if(k==='Me/Home'){
+  const first=u.name.split(' ')[0];
+  return head('Home','Good day, '+first+'. Here is what needs you and what is coming up.')
+  +'<div class="grid2"><div>'
+  +'<div class="block"><h2>Waiting on you <span>'+(u.ws.includes('Team')?'2 items':u.ws.includes('Payroll')?'1 item':'None')+'</span></h2><div class="list">'
+  +(u.ws.includes('Team')?'<div><span>Leave request from Ena Villanueva<small>22–24 Dec 2026, 3 days. Filed 14 Nov.</small></span>'+badge('warning','Pending')+'</div><div><span>Overtime for Rey Padilla<small>Warehouse, 6 Nov, 2 hours.</small></span>'+badge('warning','Pending')+'</div>':u.ws.includes('Payroll')?'<div><span>Run PG-01 · 1–15 Nov 2026<small>'+(cur==='faye'?'Waiting for your approval':'1 warning to fix before submitting')+'</small></span>'+badge('warning','Pending')+'</div>':'<div><span>Nothing needs your action<small>New requests and approvals show up here.</small></span></div>')+'</div></div>'
+  +'<div class="block"><h2>My requests <span>Last 30 days</span></h2><div class="list"><div><span>Vacation leave, 22–24 Dec<small>With Sofia Lee since 14 Nov</small></span>'+badge('warning','Pending')+'</div><div><span>Sick leave, 13 Nov<small>Approved by Sofia Lee</small></span>'+badge('success','Approved')+'</div><div><span>Profile change: mobile number<small>Applied by HR on 2 Nov</small></span>'+badge('success','Approved')+'</div></div></div>'
+  +'</div><div>'
+  +'<div class="block"><h2>Leave balance <span>2026</span></h2><div class="tw"><table><thead><tr><th>Type</th><th class="n">Left</th><th class="n">Used</th></tr></thead><tbody><tr><td>Vacation</td><td class="n">'+u.bal[0].toFixed(1)+'</td><td class="n">'+(15-u.bal[0]).toFixed(1)+'</td></tr><tr><td>Sick</td><td class="n">'+u.bal[1].toFixed(1)+'</td><td class="n">'+(7-u.bal[1]).toFixed(1)+'</td></tr></tbody></table></div><p class="cap">Days. Placeholder leave rules from seed data.</p></div>'
+  +'<div class="block"><h2>Next pay dates</h2><div class="list"><div><span>Semi-monthly, 1–15 Nov<small>Pay date 20 Nov 2026</small></span></div><div><span>Semi-monthly, 16–30 Nov<small>Pay date 5 Dec 2026</small></span></div></div></div>'
+  +'<div class="block"><h2>Holidays <span>Placeholders, verify</span></h2><div class="list"><div><span>Bonifacio Day<small>Mon 30 Nov · regular holiday</small></span></div><div><span>Immaculate Conception<small>Tue 8 Dec · special non-working</small></span></div><div><span>Christmas Day<small>Fri 25 Dec · regular holiday</small></span></div></div></div>'
+  +'</div></div>';}
+ if(k==='Me/Payslips'){return head('Payslips','Your pay for each period. Amounts are placeholders from seed data.')+'<div class="tw"><table><thead><tr><th>Period</th><th>Pay date</th><th class="n">Gross</th><th class="n">Deductions</th><th class="n">Net pay</th><th>Status</th></tr></thead><tbody>'+[['16–31 Oct 2026','5 Nov 2026',1625000,-291438,1333562],['1–15 Oct 2026','20 Oct 2026',1625000,-291438,1333562],['16–30 Sep 2026','5 Oct 2026',1625000,-291438,1333562],['1–15 Sep 2026','20 Sep 2026',1625000,-291438,1333562],['16–31 Aug 2026','5 Sep 2026',1625000,-291438,1333562]].map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="n">'+php(r[2])+'</td><td class="n">'+php(r[3])+'</td><td class="n">'+php(r[4])+'</td><td>'+badge('success','Paid')+'</td></tr>').join('')+'</tbody></table></div><p class="cap ph">Placeholder values. Statutory deductions are not verified.</p>';}
+ if(k==='Team/Approvals'){
+  const items=[['Leave request from Ena Villanueva','Vacation leave, 22 to 24 Dec 2026 (3 days). Balance after approval: 3.5 days. Filed 14 Nov.','Approve leave','Return to Ena'],['Overtime for Rey Padilla','Warehouse, 6 Nov 2026, 2 hours after shift. Filed 7 Nov.','Approve overtime','Return to Rey']];
+  return head('Approvals','Requests from the people who report to you.')
+  +'<div class="tabs" role="tablist"><button role="tab" aria-selected="true">Waiting (2)</button><button role="tab" aria-selected="false">Decided</button></div>'
+  +items.map(i=>'<div class="ap block"><div><h3>'+i[0]+'</h3><p>'+i[1]+'</p></div><div><h3>Your decision</h3><p>'+badge('warning','Pending')+'</p><div style="display:flex;gap:var(--s-2);flex-wrap:wrap"><button class="btn primary">'+i[2]+'</button><button class="btn secondary">'+i[3]+'</button></div></div></div>').join('')
   +(cur==='hana'?'<div class="alert info">'+ic('alert')+'<div><b>Your own leave request was sent to Rico Casa</b>You can\'t approve your own request. Rule SoD-2 sends it to your manager.</div></div>':'');}
  if(k==='Payroll/Runs'){
   const prep=cur==='paolo';
-  return head('Run PG-01 · 1–15 Nov 2026','Semi-monthly pay group. Warnings come first, then totals.','<span class="badge warning">Needs fixing before submit</span>')
+  const R=[['Reyes, Hana',2100000,-381240,1718760,'+0.0%'],['Dizon, Marco',2450000,-435000,2015000,'+0.0%'],['Lee, Sofia',2100000,-382500,1717500,'+0.0%'],['Padilla, Rey',1700000,-299000,1401000,'+2.4%'],['Villanueva, Ena',1100000,-190200,909800,'+0.0%'],['Garcia, Luis',975000,-110025,864975,'new']];
+  const g=R.reduce((a,r)=>a+r[1],0),d=R.reduce((a,r)=>a+r[2],0),n=R.reduce((a,r)=>a+r[3],0);
+  return head('Run PG-01 · 1–15 Nov 2026','Semi-monthly pay group. Warnings come first, then totals.','<span>'+badge('warning','Needs fixing before submit')+'</span>')
   +'<div class="alert warning">'+ic('alert')+'<div><b>1 employee has no time record</b>Garcia, Luis has no attendance for 1–15 Nov. Fix the time record or leave him out of this run.</div></div>'
   +'<ol class="tl"><li class="cur">1. Prepare</li><li>2. Submit</li><li>3. Approve</li><li>4. Lock</li></ol>'
-  +'<div class="tw" style="margin-top:var(--s-4)"><table><thead><tr><th>Employee</th><th class="n">Gross</th><th class="n">Deductions</th><th class="n">Net pay</th><th class="n">Change vs last run</th></tr></thead><tbody>'+[['Reyes, Hana',2100000,-381240,1718760,'+0.0%'],['Dizon, Marco',2450000,-435000,2015000,'+0.0%'],['Garcia, Luis',975000,-110025,864975,'new']].map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+php(r[1])+'</td><td class="n">'+php(r[2])+'</td><td class="n">'+php(r[3])+'</td><td class="n">'+r[4]+'</td></tr>').join('')+'</tbody></table></div>'
-  +'<div class="panel"><h2>'+(prep?'Submit for approval':'Approve this run')+'</h2>'
-  +(prep?'<p style="color:var(--text-muted)">You prepared this run. Fix the warning above, then submit it to the payroll approver.</p><button class="btn primary" disabled>Submit for approval</button>':'<p style="color:var(--text-muted)">You are the approver. This run has an unresolved warning.</p><div style="display:flex;gap:var(--s-2)"><button class="btn primary">Approve run</button><button class="btn secondary">Return to preparer</button></div>')
-  +'<p class="cap" style="margin-top:var(--s-3)">'+(prep?'Rule SoD-1: the person who prepares a run can\'t approve it.':'Approving needs a passkey check. Rule SoD-1: you can\'t approve a run you prepared.')+'</p></div>'
-  +'<p class="ph" style="margin-top:var(--s-3)">Rates in this run are placeholders. Verify statutory values before real use.</p>';}
- if(k==='Admin/Role assignments'){return head('Role assignments','Who can do what, and until when.','<button class="btn primary">Propose assignment</button>')
-  +'<div class="tw"><table><thead><tr><th>Person</th><th>Role</th><th>Scope</th><th>Ends</th><th>Status</th></tr></thead><tbody>'+[['Reyes, Hana','hr_admin','Whole company','No end date',badge('success','Active')],['Santos, Paolo','payroll_preparer','Semi-monthly, monthly','No end date',badge('success','Active')],['Lim, Faye','payroll_approver','Whole company','No end date',badge('success','Active')],['Reyes, Hana','tenant_admin','Whole company','4 Dec 2026 (17 days)',badge('warning','Exception: SoD-5')],['Mendoza, Carla','auditor','Whole company, read only','15 Jan 2027 (59 days)',badge('info','Time-boxed')],['Lim, Faye','payroll_preparer','Monthly','Not applicable',badge('danger','Blocked: SoD-1')]].map(r=>'<tr><td>'+r[0]+'</td><td class="mask">'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td></tr>').join('')+'</tbody></table></div>'
-  +'<div class="alert danger">'+ic('lock')+'<div><b>Faye Lim can\'t also prepare payroll</b>Rule SoD-1 stops one person from preparing and approving payroll. No exception is possible.</div></div>';}
- if(ws==='Me'&&page==='Home'){return head('Home','Hello, '+P[cur].name.split(' ')[0]+'.')+'<div class="empty"><h2>Nothing needs your action</h2><p>When a request, payslip or approval is waiting for you, it shows up here.</p><button class="btn secondary">File a leave request</button></div>';}
- return head(page,SCOPE[ws])+'<div class="empty"><h2>Nothing here yet</h2><p>This page has no data in the preview.</p></div>';
+  +'<div class="tw"><table><thead><tr><th>Employee</th><th class="n">Gross</th><th class="n">Deductions</th><th class="n">Net pay</th><th class="n">Change vs last run</th></tr></thead><tbody>'+R.map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+php(r[1])+'</td><td class="n">'+php(r[2])+'</td><td class="n">'+php(r[3])+'</td><td class="n">'+r[4]+'</td></tr>').join('')+'<tr class="total"><td>Total, '+R.length+' employees</td><td class="n">'+php(g)+'</td><td class="n">'+php(d)+'</td><td class="n">'+php(n)+'</td><td></td></tr></tbody></table></div>'
+  +'<div class="ap" style="margin-top:var(--s-4)"><div><h3>'+(prep?'Submit for approval':'Approve this run')+'</h3><p>'+(prep?'You prepared this run. Fix the warning above, then submit it to the payroll approver.':'You are the approver. This run has an unresolved warning.')+'</p><p style="margin:0">'+(prep?'Rule SoD-1: the person who prepares a run can\'t approve it.':'Approving needs a passkey check. Rule SoD-1: you can\'t approve a run you prepared.')+'</p></div><div><h3>Your action</h3><div style="display:flex;gap:var(--s-2);flex-wrap:wrap">'+(prep?'<button class="btn primary" disabled>Submit for approval</button>':'<button class="btn primary">Approve run</button><button class="btn secondary">Return to preparer</button>')+'</div></div></div>'
+  +'<p class="cap ph">Rates in this run are placeholders. Verify statutory values before real use.</p>';}
+ if(k==='Admin/Role assignments'){
+  return head('Role assignments','Who can do what, and until when.','<button class="btn primary">Propose assignment</button>')
+  +'<div class="tabs" role="tablist">'+['Assignments','Proposals','SoD exceptions','Access review'].map(t=>'<button role="tab" data-tab="'+t+'" aria-selected="'+(t===tab)+'">'+t+'</button>').join('')+'</div>'
+  +'<div class="tw"><table><thead><tr><th>Person</th><th>Role</th><th>Scope</th><th>Granted by</th><th>Ends</th><th>Status</th></tr></thead><tbody>'+[['Reyes, Hana','hr_admin','Whole company','Bautista, Ines','No end date',badge('success','Active')],['Santos, Paolo','payroll_preparer','Semi-monthly, monthly','Bautista, Ines · approved by Casa, Rico','No end date',badge('success','Active')],['Lim, Faye','payroll_approver','Whole company','Bautista, Ines · approved by Casa, Rico','No end date',badge('success','Active')],['Reyes, Hana','tenant_admin','Whole company','Bautista, Ines · approved by Aquino, Noel','4 Dec 2026 (17 days)',badge('warning','Exception SoD-5')],['Mendoza, Carla','auditor','Whole company, read only','Bautista, Ines · approved by Casa, Rico','15 Jan 2027 (59 days)',badge('info','Time-boxed')],['Lim, Faye','payroll_preparer','Monthly','Bautista, Ines','Not applicable',badge('danger','Blocked by SoD-1')]].map(r=>'<tr class="row"><td>'+r[0]+'</td><td class="mask">'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td></tr>').join('')+'</tbody></table></div>'
+  +'<div class="alert danger" style="margin-top:var(--s-4)">'+ic('lock')+'<div><b>Faye Lim can\'t also prepare payroll</b>Rule SoD-1 stops one person from preparing and approving payroll. No exception is possible.</div></div>';}
+ if(k==='Admin/Access preview'){return accessView()}
+ if(k==='Me/Leave'){return head('Leave','File a request and see your balance.','<button class="btn primary">File a leave request</button>')+'<div class="tw"><table><thead><tr><th>Dates</th><th>Type</th><th class="n">Days</th><th>Approver</th><th>Status</th></tr></thead><tbody><tr><td>22–24 Dec 2026</td><td>Vacation</td><td class="n">3.0</td><td>Lee, Sofia</td><td>'+badge('warning','Pending')+'</td></tr><tr><td>13 Nov 2026</td><td>Sick</td><td class="n">1.0</td><td>Lee, Sofia</td><td>'+badge('success','Approved')+'</td></tr><tr><td>14 Aug 2026</td><td>Vacation</td><td class="n">8.5</td><td>Lee, Sofia</td><td>'+badge('success','Approved')+'</td></tr></tbody></table></div>';}
+ return head(page,SCOPE[ws])+'<div class="empty"><h2>Nothing here yet</h2><p>This page has no data in the preview.</p><button class="btn secondary" data-home>Back to the first page</button></div>';
+}
+const ROLES=['hr_admin','timekeeper','payroll_preparer','payroll_approver','executive','tenant_admin','dpo','auditor'];
+let picked=new Set(),mgrOn=false;
+function accessView(){
+ const has=x=>picked.has(x);const W=['employee','Me'];const ws2=['Me'];if(mgrOn)ws2.push('Team');if(has('hr_admin'))ws2.push('HR');if(has('payroll_preparer')||has('payroll_approver'))ws2.push('Payroll');if(has('tenant_admin'))ws2.push('Admin');if(has('dpo'))ws2.push('Privacy');if(has('auditor')||has('dpo')||has('tenant_admin'))ws2.push('Audit');if(has('executive'))ws2.push('Dashboards');
+ const bad=[],warn=[];if(has('payroll_preparer')&&has('payroll_approver'))bad.push('SoD-1: preparer and approver on one account. No exception is possible.');
+ if(has('auditor')){const w=[...picked].filter(x=>['hr_admin','timekeeper','payroll_preparer','payroll_approver','tenant_admin','dpo'].includes(x));if(w.length)bad.push('SoD-7: an auditor can\'t hold write roles ('+w.join(', ')+'). No exception is possible.')}
+ if(has('tenant_admin')){const c=['hr_admin','payroll_preparer','payroll_approver'].filter(has);if(c.length)warn.push('SoD-5: tenant_admin with '+c.join(', ')+' needs an exception with a second approver, 90 days at most.')}
+ if(has('dpo')&&has('tenant_admin'))warn.push('SoD-6: dpo with tenant_admin needs an exception, 90 days at most.');
+ const idle=!picked.size&&!mgrOn;
+ return head('Access preview','Tick the roles one person would hold. The server checks the combination and shows what they would see. Nothing is saved.')
+ +'<div class="grid2"><div class="block"><h2>Roles</h2><div class="panel" style="margin-top:0">'+ROLES.map(r=>'<label class="chk"><input type="checkbox" data-role="'+r+'"'+(picked.has(r)?' checked':'')+'> <span class="mask">'+r+'</span></label>').join('')+'<label class="chk" style="margin-top:var(--s-2)"><input type="checkbox" data-mgr'+(mgrOn?' checked':'')+'> <span>Has direct or indirect reports (manager)</span></label></div></div>'
+ +'<div class="block"><h2>Result</h2><div class="panel" style="margin-top:0"><p style="font-size:16px;font-weight:600;margin:0 0 var(--s-2)">'+(bad.length?'Rejected':idle?'Employee only':warn.length?'Allowed with an exception':'Allowed')+'</p>'
+ +(idle?'<p class="cap" style="margin:0 0 var(--s-3)">This person only sees the Me workspace. Tick a role to see what changes.</p>':'')
+ +'<div class="label" style="font-weight:600;margin-bottom:var(--s-1)">Workspaces</div><p style="margin:0 0 var(--s-3)">'+ws2.join(', ')+'</p>'
+ +(bad.length||warn.length?'<div style="font-weight:600;margin-bottom:var(--s-1)">Separation of duties</div>'+bad.map(b=>'<p style="margin:0 0 var(--s-2)">'+badge('danger','Blocked')+' '+b+'</p>').join('')+warn.map(b=>'<p style="margin:0 0 var(--s-2)">'+badge('warning','Needs approval')+' '+b+'</p>').join(''):'')
+ +'</div></div></div>';
 }
 document.addEventListener('click',e=>{const t=e.target;let a;
- if(a=t.closest('[data-ws]')){ws=a.dataset.ws;page=NAV[ws][0];sel=null;nav();return}
- if(a=t.closest('[data-p]')){page=a.dataset.p;sel=null;nav();return}
- if(a=t.closest('[data-row]')){sel=+a.dataset.row;draw();return}
+ if(a=t.closest('[data-ws]')){ws=a.dataset.ws;page=NAV[ws][0];sel=null;hi=null;nav();return}
+ if(a=t.closest('[data-p]')){page=a.dataset.p;sel=null;hi=null;nav();return}
+ if(a=t.closest('[data-row]')){const p=rows[+a.dataset.row];if(p){hi=p.no;sel=p;draw()}return}
+ if(a=t.closest('[data-pg]')){pg+=+a.dataset.pg;draw();return}
+ if(a=t.closest('[data-tab]')){tab=a.dataset.tab;draw();return}
  if(t.closest('[data-back]')){sel=null;draw();return}
+ if(t.closest('[data-clear]')){dept='';stat='';query='';draw();return}
+ if(t.closest('[data-home]')){page=NAV[ws][0];draw();return}
  if(t.closest('[data-reveal]')){dlg=true;draw();return}
  if(t.closest('[data-cancel]')){dlg=false;draw();return}
  if(t.closest('[data-confirm]')){dlg=false;shown=true;draw();setTimeout(()=>{shown=false;draw()},30000)}});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.id==='dept'){dept=t.value;pg=0;draw()}
+ if(t.id==='stat'){stat=t.value;pg=0;draw()}
+ if(t.dataset&&t.dataset.role){t.checked?picked.add(t.dataset.role):picked.delete(t.dataset.role);draw()}
+ if(t.dataset&&'mgr' in t.dataset){mgrOn=t.checked;draw()}});
+document.addEventListener('input',e=>{if(e.target.id==='q'){query=e.target.value;pg=0;const pos=e.target.selectionStart;draw();const q=$('q');if(q){q.focus();q.setSelectionRange(pos,pos)}}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const a=e.target.closest('[data-row],[data-p]');if(a)a.click()}if(e.key==='Escape'&&dlg){dlg=false;draw()}});
 $('who').innerHTML=Object.keys(P).map(k=>'<option value="'+k+'">'+P[k].name+'</option>').join('');
-$('who').addEventListener('change',e=>{cur=e.target.value;ws=P[cur].ws[0];page=NAV[ws][0];sel=null;draw()});
+$('who').addEventListener('change',e=>{cur=e.target.value;ws=P[cur].ws[0];page=NAV[ws][0];sel=null;hi=null;draw()});
 $('bell').innerHTML=ic('bell');
-const q=new URLSearchParams(location.search);
-if(P[q.get('u')]){cur=q.get('u');$('who').value=cur;ws=P[cur].ws[0];page=NAV[ws][0];}
-if(NAV[q.get('ws')]){ws=q.get('ws');page=NAV[ws][0];if(q.get('row'))sel=+q.get('row')}
+const q0=new URLSearchParams(location.search);
+if(P[q0.get('u')]){cur=q0.get('u');$('who').value=cur;ws=P[cur].ws[0];page=NAV[ws][0];}
+if(NAV[q0.get('ws')]){ws=q0.get('ws');page=NAV[ws][0];}
+if(q0.get('page')&&NAV[ws].includes(q0.get('page')))page=q0.get('page');
 draw();
+if(q0.get('row')&&ws==='HR'&&page==='People'){const p=rows[+q0.get('row')];if(p){hi=p.no;sel=p;draw()}}
 </script></body></html>

@@ -1,73 +1,70 @@
-# Design Architecture (frontend and design system)
+# Design Architecture (frontend structure)
 
-How the user interface is structured so that the Swiss-style language ([ADR-014](adr/ADR-014-ui-design-language.md)) stays consistent and the multi-role shell ([ADR-013](adr/ADR-013-multi-role-access-model.md)) stays safe. System architecture is in the [HLD](hld/high-level-design.md); look and feel in [ui-design-system](ui-design-system.md); live example in [ui-preview](hld/ui-preview.html).
+How the interface code is organised so the visual language ([ADR-015](adr/ADR-015-ui-design-language-revised.md)) stays consistent and the multi-role shell ([ADR-013](adr/ADR-013-multi-role-access-model.md)) stays safe. System architecture: [HLD](hld/high-level-design.md). Look and feel: [ui-design-system](ui-design-system.md).
 
-## 1. Layers (each depends only on the layer above it in this list)
-| Layer | What it holds | Rule |
+## 1. Stack
+Next.js App Router, TypeScript strict, Tailwind with design tokens as CSS variables, Radix primitives (shadcn/ui as a base, fully restyled to the tokens), TanStack Table, React Hook Form with Zod, Lucide icons, a typed API client generated from OpenAPI, Vitest, Playwright and axe. Fonts self-hosted through Fontsource. Changing any of these needs the owner's approval.
+
+## 2. Layers
+| Layer | Holds | Rule |
 |---|---|---|
-| 1. Tokens | colour, type scale, spacing (8 px), rules, focus ring, motion | One CSS file of custom properties; the only place raw hex values exist |
-| 2. Primitives | accessible unstyled behaviour (Radix or React Aria): dialog, menu, tabs, combobox, tooltip | No visual decisions here |
-| 3. Components | Button, Input, Select, Table, StatusMark, Banner, Dialog, MaskedValue | Styled only with tokens; every state specified ([ui-design-system](ui-design-system.md)) |
-| 4. Patterns | CatalogueStrip, HangingLabelRecord, DenseTable, ApprovalBlock, WorkspaceStrip, ScopeChip, ErrorSummary, EmptyState | Compose components; own layout rules |
-| 5. Workspaces | route groups `/me /team /hr /payroll /admin /privacy /audit /dashboards` | Own navigation, page titles, scope chip text |
-| 6. Screens | pages built from patterns, wired to API | No new visual rules; if one is needed, add it to a lower layer |
+| Tokens | colour, type, spacing, radius, motion | One CSS file of variables; the only place raw values exist |
+| Primitives | Radix-based behaviour restyled with tokens | No domain knowledge |
+| Shared components | Button, Input, DataTable, StatusBadge, Dialog, ApprovalBlock, MaskedValue … | Props typed, every state in the catalogue |
+| Feature components | Domain screens' parts (`features/leave/components/...`) | Compose shared components; no fetch inside |
+| Routes | `src/app/(workspace)/...` pages | Wire features to the API, own page headers |
 
-## 2. Repository layout (planned)
+## 3. Folder layout
 ```
-apps/web/            Next.js App Router
-  app/(me)/ (team)/ (hr)/ (payroll)/ (admin)/ (privacy)/ (audit)/ (dashboards)/
-  lib/access/        effectiveAccess() client, workspace registry
-packages/ui/         tokens.css, primitives wrappers, components, patterns, stories
-packages/schemas/    zod schemas shared with the API
-packages/i18n/       en-PH strings (all copy lives here)
-packages/icons/      custom line icon set, SVG sources and generated components
+src/
+  design-system/        tokens.css, primitives/, components/, icons/, catalogue/
+  features/<domain>/    components/ hooks/ schemas/ api/ utils/
+  app/
+    (auth)/             sign-in, MFA
+    (me)/ (team)/ (hr)/ (payroll)/ (admin)/ (privacy)/ (audit)/ (dashboards)/
+    catalogue/          design-system catalogue page
+  lib/                  access (effective-access client), money, dates, problem+json
+  mocks/                MSW handlers built from the seed data
+openapi/                hand-written OpenAPI spec until the backend publishes one
 ```
+Naming: PascalCase components, camelCase hooks (`useX`), kebab-case folders, one component per file, named exports, props typed as `<Component>Props`. About 150 lines per component at most.
 
-## 3. Role-aware shell architecture
-1. After sign-in the API returns `effectiveAccess`: the list of workspaces, for each the scope description, and the assignment end dates.
-2. A **workspace registry** maps workspace id to route group, left-rail items, and the entry permission. Items are included when the user holds the item's permission in any scope.
-3. The shell renders the **WorkspaceStrip** only when two or more workspaces exist. The last used workspace is remembered per user (preference only).
-4. Each page declares `requiredPermission`; a guard calls the API. A direct URL to a forbidden page shows a plain 403 page ("You do not have access to this page. Your roles: …") and records nothing client-side.
-5. The **ScopeChip** text comes from the server so it always matches what the query used.
-6. The shell listens for the `access_version` change header; on change it shows the "Your access changed. Reload to continue." banner and blocks further writes until reload.
-7. Nothing in the client treats the selected workspace as authority. API calls carry no workspace parameter.
+## 4. Separation rules
+- Components render. Hooks hold behaviour. Zod schemas hold validation. `utils` hold formatting. API calls live in `features/<domain>/api`. No `fetch` in presentational components.
+- **Never branch on role names.** Components ask the effective-access object (`can('leave:approve', resource)`), which comes from the API.
+- Money is integer centavos formatted by one utility. Rates and factors are decimal strings. Dates are Asia/Manila through one utility.
+- No PII in URLs or logs. No `console.log`.
 
-## 4. Data and state
-- Server components fetch through the API using the session; mutations go through server actions or API calls with idempotency keys for financial actions.
-- Client state is limited to form state, open dialogs and table sort or filter; URL carries filters so views are shareable and testable.
-- Optimistic updates are allowed for non-financial toggles only; payroll and approvals always wait for the server.
-- Money and hours come from the API as strings or integers and are formatted by one shared formatter (₱, minus sign, tabular figures).
-- Masked fields arrive already masked. The reveal flow requests step-up and purpose, shows the value for 30 seconds, then re-masks.
+## 5. Role-aware shell
+1. After sign-in the API returns `effectiveAccess`: workspaces, scope descriptions and assignment end dates.
+2. A workspace registry maps each workspace to its route group, sidebar items and entry permission. Items show when the user holds the permission in any scope.
+3. The workspace strip shows only allowed workspaces. A single-workspace user sees no strip.
+4. Each page declares a required permission. A direct link to a forbidden page renders the `Forbidden` state from the API's response with the reason in words.
+5. The scope chip text comes from the server so it always matches what the query used.
+6. On an `access_version` change the shell shows "Your access changed. Reload to continue." and blocks writes until reload.
+7. The selected workspace is never sent to the API as an input. No impersonation.
 
-## 5. Responsive strategy
-| Breakpoint | Layout | Used by |
+## 6. Data and state
+Server components fetch with the user's session. Mutations carry idempotency keys for financial actions. Client state is limited to form state, dialogs and table sort or filter; filters live in the URL. Optimistic updates only for non-financial toggles. Masked values arrive already masked; reveal requests step-up and, where required, a purpose, shows for 30 seconds, then re-masks. Stale data and write conflicts surface as a `ConflictNotice` with a reload action.
+
+## 7. Responsive
+| Width | Layout | Used by |
 |---|---|---|
-| ≥ 1024 | top bar, workspace strip, 220 px left rail, 12-column content | HR, payroll, admin, audit |
-| 768 to 1023 | rail collapses to a horizontal page strip | managers on tablets |
-| 360 to 767 | single column, bottom tab bar (Home, Payslips, Leave, Me) for Me; other workspaces open as a sheet | employees, managers |
-Dense tables turn into stacked record lists below 768 px; columns are prioritised per table by a config, not by hiding at random.
+| 1280 and up | top bar, 240 px sidebar, tables full width | HR, Payroll, Admin, Audit |
+| 768 to 1279 | sidebar collapses to icons | managers on tablets |
+| 360 to 767 | single column, bottom navigation (Me, Team), drawer for the rest | employees, managers |
+Dense tables become stacked record lists on narrow screens, with columns prioritised by configuration.
 
-## 6. Accessibility architecture
-Landmarks (header, nav for workspaces, nav for pages, main). Skip link first. Focus moves to the page title on route change and to the error summary on failed submit. Tables use captions and header scopes. Status uses text plus a shape. The strip is a set of buttons with `aria-current`, not a decorative tab imitation. Reduced-motion media query respected. Axe runs on every route in CI, plus a manual keyboard pass per release.
-
-## 7. Quality gates for the design system
+## 8. Quality gates
 | Gate | Tooling |
 |---|---|
-| Token contrast pairs meet AA (script in CI) | custom check over `tokens.css` |
-| No raw colour or font values outside tokens | stylelint rule |
-| Every component has all states in a story | Storybook with interaction tests |
-| Visual regression on shell, record page, dense table, form (desktop and mobile) | Playwright screenshots, owner-approved baselines |
-| Accessibility | axe in CI, manual keyboard and screen-reader pass per release |
-| Copy | lint for banned words ("seamless", "supercharge", "unlock", exclamation marks, emoji) |
-| Bundle | budgets per route; fonts self-hosted and subset |
+| Every route passes axe | Playwright plus axe |
+| Screenshot test at 360 px and 1280 px for every route | Playwright |
+| Full keyboard use and visible focus | manual pass per release plus tests |
+| Token contrast pairs meet AA | script in CI over `tokens.css` |
+| No raw colour or font values outside tokens | lint rule |
+| Banned patterns (gradients, emoji, filler words, uppercase eyebrow labels) | lint and review checklist |
+| TypeScript strict, no unused imports, no dead code | tsc and lint |
 
-## 8. Governance
-- A new pattern needs a short note: problem, why existing patterns fail, states, accessibility. Reviewed by the owner.
-- Tokens change only by ADR amendment; a colour change must pass the contrast script.
-- Components are never forked per workspace.
-- The preview page is updated with any pattern change so the owner can review visually before it ships.
-
-## 9. Open items
-- Icon set: 24 icons needed for navigation and status; draw during M0.
-- Chart style: payroll cost trend uses a ruled table first; one restrained line chart is allowed on Dashboards with pattern fills (colour-blind safe). To be specified when the first chart is built.
-- Dark theme: out of v1; tokens are structured to allow it.
+## 9. Governance
+A new shared component needs: purpose, props, states, accessibility notes, and a catalogue entry. Tokens change only by ADR amendment and must pass the contrast script. Components are never forked per workspace.

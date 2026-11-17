@@ -16,7 +16,7 @@ Rules for this file:
 | US-004 | As an engineer, I want the CI pipeline with quality gates so that unsafe code can't merge | M | Lint, typecheck, unit, SAST, secret scan, dependency audit required; a deliberately failing PR is blocked |
 | US-005 | As an engineer, I want IaC and environments (dev/staging/prod) | M | Reproducible deploy from main; staging mirrors prod; migrations run in pipeline |
 | US-006 | As a user, I want a consistent accessible UI shell | M | WCAG 2.2 AA checks in CI (axe); keyboard navigable; font and palette decision recorded |
-| US-007 | As an admin, I want role-based access control with custom roles | M | Permission matrix per [rbac-matrix](../02-requirements/rbac-matrix.md); deny by default; matrix test fails on any undeclared permission |
+| US-007 | As an admin, I want role-based access control with custom roles | M | Permission matrix per [rbac-matrix](../02-requirements/access/rbac-matrix.md); deny by default; matrix test fails on any undeclared permission |
 | US-008 | As an operator, I want structured logging and error tracking without PII | S | Log scrubber test; correlation IDs |
 | US-009 | As an admin, I want a tenant onboarding wizard (company, tax IDs, pay frequency) | M | Required statutory IDs validated by format |
 | US-010 | As an engineer, I want a feature-flag mechanism | S | Per-tenant flags; flag state audited |

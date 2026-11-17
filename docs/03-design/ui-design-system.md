@@ -53,7 +53,7 @@ IBM Plex Sans (self-hosted) for everything. IBM Plex Mono only for identifiers, 
 - Touch target 44 px on Me and Team.
 
 ### Selected and active states
-Neutral gray fill (), same font weight as unselected items. The accent shows only as a 2 px bar (left edge for nav items and rows, bottom edge for tabs) or as the icon colour. No tinted accent pills, no bold accent text. Navigation items are full-width rows with an icon, never shrink-wrapped pills.
+Neutral gray fill (`--neutral-bg`), same font weight as unselected items. The accent shows only as a 2 px bar (left edge for nav items and rows, bottom edge for tabs) or as the icon colour. No tinted accent pills, no bold accent text. Navigation items are full-width rows with an icon, never shrink-wrapped pills.
 
 ## Layout
 - **Top bar (48 px):** workspace strip (only workspaces the user's effective access allows), global search, notifications, user menu.

@@ -22,3 +22,22 @@
 - Single legal entity per tenant at launch; multi-entity (group of companies) in M8+.
 - Monthly/semi-monthly pay frequency dominates; weekly and daily-paid supported by rule engine.
 - Mix of office (fixed schedule) and shift/field staff.
+
+## Persona to role mapping (multi-role, [ADR-013](../03-design/adr/ADR-013-multi-role-access-model.md))
+A persona is a kind of person; a role is a bundle of permissions. One person usually holds several roles, so personas map to a **set** of roles. Every account linked to an employee also holds the derived `employee` role.
+
+| Persona | Granted roles | Derived roles | Typical workspaces |
+|---|---|---|---|
+| P1 HR Admin | `hr_admin` (+ `timekeeper` in small teams) | employee, manager if reports | Me, Team, HR |
+| P2 Payroll Officer | `payroll_preparer` (+ `timekeeper` allowed) | employee | Me, Payroll |
+| P3 Employee | none | employee | Me |
+| P4 Line Manager | none | employee, manager | Me, Team |
+| P5 Finance Controller | `payroll_approver` | employee | Me, Payroll |
+| P6 Owner / GM | `executive` (+ `dpo` interim, OD-14) | employee | Me, Dashboards, Privacy |
+| P7 DPO | `dpo` | employee | Me, Privacy, Audit |
+| P8 System Admin | `tenant_admin` | employee | Me, Admin |
+| P9 External auditor | `auditor` (time-boxed) | none | Audit |
+| P10 Recruiter | `recruiter` (disabled until ATS) | employee | Me |
+| Operator (not a persona of the tenant) | `platform_ops` in the platform realm | none | none (break-glass) |
+
+Combinations that the system refuses are listed in [rbac-matrix](../02-requirements/access/rbac-matrix.md).

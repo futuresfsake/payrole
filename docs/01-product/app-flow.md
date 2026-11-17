@@ -104,7 +104,7 @@ flowchart LR
 ## 7. Offboarding
 Resignation/termination recorded → clearance checklist (assets, accountabilities) → final pay computation → approval → release → access revoked at effective date → record moved to retention state → scheduled anonymization.
 
-## 8. Key screens (wireframes now in [wireframes/](wireframes/README.md))
+## 8. Key screens (first list, superseded by section 12; wireframes in [wireframes/](wireframes/README.md))
 Login/MFA · Home (role-aware) · Employee list · Employee profile (tabs: Personal, Employment, Pay, IDs, Documents, History, Leave, Attendance) · Import wizard · Schedule editor · Attendance grid · Approvals inbox · Payroll run workspace (exceptions-first) · Payslip with "explain" drawer · Statutory exports · Privacy console · Audit viewer · Settings (roles, workflows, holidays, rule sets).
 
 ## 9. Sign-in and workspace resolution

@@ -13,7 +13,7 @@
 - Access tokens (API clients) ≤ 15 min; refresh rotation with reuse detection.
 
 ## Authorization
-- Central `authorize()` (LLD §7). Matrix: [rbac-matrix](../02-requirements/rbac-matrix.md).
+- Central `authorize()` (LLD §7). Matrix: [rbac-matrix](../02-requirements/access/rbac-matrix.md).
 - Scope resolved from reporting line as-of-today; delegation time-boxed and audited.
 - Object IDs are UUIDv7; authorization never relies on ID obscurity.
 - DB layer: RLS tenant isolation; optional additional RLS for self-only tables (defence in depth).

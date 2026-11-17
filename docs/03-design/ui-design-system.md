@@ -21,8 +21,8 @@ Raw values exist only in `tokens.css`. Components use token names.
 | `--accent-hover` | `#1D4ED8` (blue-700) | hover and pressed | |
 | `--accent-tint` | `#EFF6FF` (blue-50) | selected row, selected item | blue-700 text 6.2:1 |
 
-### Status (badges only: text plus a dot on a soft tint)
-| Status | Text | Tint | Contrast |
+### Status (a word plus a small dot in the status colour; no capsule, no tinted pill)
+| Status | Text colour | Soft tint (alerts only) | Contrast |
 |---|---|---|---|
 | success | `#15803D` | `#F0FDF4` | 4.8:1 |
 | warning | `#B45309` | `#FFFBEB` | 4.8:1 |
@@ -51,6 +51,9 @@ IBM Plex Sans (self-hosted) for everything. IBM Plex Mono only for identifiers, 
 - Motion 150 to 200 ms ease-out, for state feedback only. Reduced motion respected.
 - Focus: 2 px `--accent` ring, 2 px offset, on every interactive element.
 - Touch target 44 px on Me and Team.
+
+### Selected and active states
+Neutral gray fill (), same font weight as unselected items. The accent shows only as a 2 px bar (left edge for nav items and rows, bottom edge for tabs) or as the icon colour. No tinted accent pills, no bold accent text. Navigation items are full-width rows with an icon, never shrink-wrapped pills.
 
 ## Layout
 - **Top bar (48 px):** workspace strip (only workspaces the user's effective access allows), global search, notifications, user menu.

@@ -13,7 +13,11 @@
 - Access tokens (API clients) ≤ 15 min; refresh rotation with reuse detection.
 
 ## Authorization
-- Central `authorize()` (LLD §7). Matrix: [rbac-matrix](../02-requirements/access/rbac-matrix.md).
+- Central `authorize()` (LLD §7). Matrix: [rbac-matrix](../02-requirements/access/rbac-matrix.md). Model: one account, many scoped role assignments ([ADR-013](../03-design/adr/ADR-013-multi-role-access-model.md), [roles-and-permissions](../02-requirements/access/roles-and-permissions.md)).
+- MFA is required if **any** active assignment is a granted role other than `recruiter` (the derived `employee` and `manager` roles alone do not require it, though it is advised).
+- Granting `payroll_*`, `dpo` or `tenant_admin` needs a second approver; static SoD pairs are rejected at proposal time (SoD-1, SoD-5, SoD-6, SoD-7).
+- Assignment changes rotate the session and are audited with grantor, approver and reason. Quarterly access review lists every assignment, every SoD exception and every `auditor` grant with its expiry.
+- The workspace switcher in the UI hides navigation only. Authorization always uses the full active assignment set.
 - Scope resolved from reporting line as-of-today; delegation time-boxed and audited.
 - Object IDs are UUIDv7; authorization never relies on ID obscurity.
 - DB layer: RLS tenant isolation; optional additional RLS for self-only tables (defence in depth).

@@ -1,0 +1,54 @@
+/* ADR-015 tokens. Raw values live only in this file. Components use the names. */
+:root {
+  /* colour */
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --border-control: #6b7280;
+  --text: #111827;
+  --text-muted: #4b5563;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --neutral-bg: #f3f4f6;
+
+  /* status: text colour and soft tint (tints are used by alerts only) */
+  --success: #15803d;
+  --success-bg: #f0fdf4;
+  --warning: #b45309;
+  --warning-bg: #fffbeb;
+  --danger: #b91c1c;
+  --danger-bg: #fef2f2;
+  --info: #0e7490;
+  --info-bg: #ecfeff;
+  --neutral: #374151;
+
+  /* space: 4px base */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+
+  /* shape */
+  --r-control: 6px;
+  --r-dialog: 8px;
+
+  /* type */
+  --font-ui: "IBM Plex Sans", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, monospace;
+
+  /* layout */
+  --topbar-h: 48px;
+  --sidebar-w: 240px;
+  --row-h: 40px;
+  --row-h-compact: 32px;
+  --tap: 44px;
+  --content-max: 1280px;
+
+  /* motion */
+  --t-fast: 150ms;
+  --t-panel: 200ms;
+}

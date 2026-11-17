@@ -1,6 +1,6 @@
 # ADR-014: UI design language: International Typographic Style on a personnel-file metaphor
 
-Status: Accepted (2026-11-17). Supersedes the "ledger" direction in the v0.1 wireframes README (the ledger survives only inside payroll tables). Detail: [ui-design-system](../ui-design-system.md).
+Status: **Superseded by [ADR-015](ADR-015-ui-design-language-revised.md)** (2026-11-17). Kept for history; do not implement. It superseded the "ledger" direction in the v0.1 wireframes README.
 
 ## Context
 The owner rejects interfaces that look generated: rounded card grids, gradient heroes, pill chips, emoji icons, system fonts. The v0.1 direction ("the ledger") was a private metaphor, not a recognised style, and it fits payroll screens but not onboarding, leave, org charts or a multi-role shell. An HRIS is used all day by non-designers, so the look must be a known, proven system rather than novelty.

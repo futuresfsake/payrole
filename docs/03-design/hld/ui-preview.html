@@ -127,12 +127,12 @@ const NAV={
 };
 const SCOPE={Me:'Me · own records',Team:'Team · 6 reports',HR:'HR · all employees',Payroll:'Payroll · semi-monthly pay group',Dashboards:'Executive · aggregates, masked',Privacy:'Privacy · tenant',Admin:'Admin · tenant, no HR or pay data',Audit:'Audit · read only'};
 const EMP=[
- ['EMP-0007','Reyes, Hana','HR and Admin','HR Lead','Regular','ok'],
- ['EMP-0012','Dizon, Marco','Operations','Operations Manager','Regular','ok'],
- ['EMP-0021','Villanueva, Ena','Operations','Sales Associate','Regular','ok'],
- ['EMP-0026','Garcia, Luis','Operations','Warehouse Staff','Probationary','pend'],
- ['EMP-0031','Tan, Bea','Finance','Accounting Clerk','Regular','ok'],
- ['EMP-0034','Cruz, Joel','Operations','Driver','Contractual','draft']
+ ['EMP-0002','Reyes, Hana','HR and Admin','HR Lead','Regular','ok'],
+ ['EMP-0005','Dizon, Marco','Operations','Operations Manager','Regular','ok'],
+ ['EMP-0012','Villanueva, Ena','Operations','Sales Associate','Regular','ok'],
+ ['EMP-0019','Garcia, Luis','Operations','Warehouse Staff','Probationary','pend'],
+ ['EMP-0008','Tan, Bea','Finance','Accounting Clerk','Regular','ok'],
+ ['EMP-0021','Cruz, Joel','Operations','Driver','Contractual','draft']
 ];
 const STAT={ok:['Active','ok'],pend:['On probation','pend'],draft:['Contract ends 31 Dec','draft'],rej:['Rejected','rej']};
 const st=k=>'<span class="st '+k+'"><i></i>'+({ok:'Active',pend:'Pending',rej:'Rejected',draft:'Draft'}[k])+'</span>';
@@ -155,13 +155,13 @@ function view(){
    return '<div class="catalog mono"><span>'+e[0]+'</span><span>201 FILE</span><span>'+STAT[e[5]][0].toUpperCase()+'</span><span>EFFECTIVE 2026-11-01</span></div>'
    +'<div class="pagehead"><h1>'+e[1]+'</h1><button class="sec" data-back>Back to people</button></div><div style="height:24px"></div>'
    +'<dl style="margin:0">'
-   +card('Position',e[3])+card('Department',e[2])+card('Employment',e[4]+', full time')+card('Reports to',e[0]==='EMP-0012'?'Casa, Rico':(e[0]==='EMP-0007'?'Casa, Rico':'Dizon, Marco'))
-   +card('Pay group','Semi-monthly')+card('Monthly rate','<span class="num" style="display:inline">₱32,500.00</span>')
+   +card('Position',e[3])+card('Department',e[2])+card('Employment',e[4]+', full time')+card('Reports to',(e[0]==='EMP-0005'||e[0]==='EMP-0002')?'Casa, Rico':(e[0]==='EMP-0012'?'Lee, Sofia':(e[0]==='EMP-0019'?'Padilla, Rey':(e[0]==='EMP-0008'?'Lim, Faye':'Padilla, Rey'))))
+   +card('Pay group',e[2]==='Finance'?'Monthly (office)':(e[2]==='HR and Admin'?'Monthly (office)':'Semi-monthly (operations)'))+card('Monthly rate','<span class="num" style="display:inline">₱32,500.00</span>')
    +card('SSS number','<span class="mask">▒▒▒▒▒▒▒ DEV-4821</span> <button class="sec" style="min-height:32px;padding:4px 12px" data-reveal>Reveal</button> <span class="mono" style="color:var(--muted)">step-up and purpose required</span>')
    +card('Medical notes','<span class="mono" style="color:var(--muted)">Not shown. Visible to HR records only.</span>')
    +'</dl>';}
   return head('People','<button class="pri">Add employee</button>')
-   +'<div class="tw"><table><caption class="label" style="text-align:left;padding:0 0 8px">6 of 26 employees</caption><thead><tr><th>No.</th><th>Name</th><th>Department</th><th>Position</th><th>Type</th><th>Status</th></tr></thead><tbody>'
+   +'<div class="tw"><table><caption class="label" style="text-align:left;padding:0 0 8px">6 of 26 employees (seed tenant)</caption><thead><tr><th>No.</th><th>Name</th><th>Department</th><th>Position</th><th>Type</th><th>Status</th></tr></thead><tbody>'
    +EMP.map((e,i)=>'<tr tabindex="0" data-row="'+i+'"><td class="mono">'+e[0]+'</td><td>'+e[1]+'</td><td>'+e[2]+'</td><td>'+e[3]+'</td><td>'+e[4]+'</td><td>'+st(e[5])+'</td></tr>').join('')+'</tbody></table></div>'
    +'<p style="font-size:14px;color:var(--muted)">Select a row to open the 201 file. Pay and ID fields appear only for roles that hold them.</p>';
  }

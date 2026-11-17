@@ -62,5 +62,4 @@
 | Dynamic SoD | Object-level rules checked at action time, such as no self-approval |
 | SoD exception | A recorded, second-approved, time-boxed (90 days at most) waiver of SoD-5 or SoD-6 |
 | Bootstrap assignment | The first tenant-admin assignment(s), created at tenant provisioning without a proposer or approver |
-| Catalogue strip | The mono line at the top of every record page, for example `EMP-0042 · 201 FILE · ACTIVE` (ADR-014) |
 | Seed data | Synthetic development data (`db/seed`); never real people or real statutory rates |

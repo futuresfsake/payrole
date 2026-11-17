@@ -6,6 +6,8 @@
 ## Single-commit rule
 Work for one story is squashed into one commit and one push; PRs are squash-merged. (Owner preference: keep contribution history clean.)
 
+**Dated exception:** for the 2026-11-17 multi-role restructure the owner asked for one commit and one push per file, on branch `docs/multi-role-restructure` (see [change record](../00-overview/change-record-2026-11-17.md), C-15). The single-commit rule applies again to all later work.
+
 ## Commit format
 ```
 feat(payroll): compute holiday premium (US-303)

@@ -1,0 +1,245 @@
+openapi: 3.0.3
+info:
+  title: PayRole API (slice 1 contract)
+  version: 0.1.0
+  description: >
+    Hand-written contract for the first vertical slice until the backend publishes its own.
+    Errors are problem+json. Authorization failures carry a reasonCode (ADR-013).
+paths:
+  /api/session:
+    post:
+      operationId: signIn
+      summary: Sign in with a person and an authenticator code (mock identity provider)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SignInRequest" }
+      responses:
+        "204": { description: Signed in }
+        "401": { $ref: "#/components/responses/Problem" }
+    delete:
+      operationId: signOut
+      summary: Sign out
+      responses:
+        "204": { description: Signed out }
+  /api/people:
+    get:
+      operationId: listSignInPeople
+      summary: People who can sign in on the mock identity provider
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/SignInPerson" }
+  /api/me/access:
+    get:
+      operationId: getEffectiveAccess
+      summary: Effective access of the signed-in person
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EffectiveAccess" }
+        "401": { $ref: "#/components/responses/Problem" }
+  /api/workspaces/{id}:
+    get:
+      operationId: checkWorkspace
+      summary: Entry check for a workspace. 403 carries the reason code.
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/WorkspaceAccess" }
+        "403": { $ref: "#/components/responses/Problem" }
+  /api/leave/balances:
+    get:
+      operationId: getLeaveBalances
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/LeaveBalance" }
+  /api/leave/requests:
+    get:
+      operationId: listMyLeaveRequests
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/LeaveRequest" }
+    post:
+      operationId: fileLeaveRequest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NewLeaveRequest" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LeaveRequest" }
+        "422": { $ref: "#/components/responses/Problem" }
+  /api/approvals:
+    get:
+      operationId: listApprovals
+      summary: Requests waiting for, or decided by, the signed-in person
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/LeaveRequest" }
+        "403": { $ref: "#/components/responses/Problem" }
+  /api/approvals/{id}/decision:
+    post:
+      operationId: decideApproval
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Decision" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LeaveRequest" }
+        "403": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+components:
+  responses:
+    Problem:
+      description: problem+json
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status, correlationId]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        correlationId: { type: string }
+        reasonCode:
+          type: string
+          enum: [NO_PERMISSION_IN_SCOPE, STEP_UP_REQUIRED, PURPOSE_REQUIRED, SOD_1, SOD_2, SOD_3, SOD_4, SOD_5, SOD_6, SOD_7, ASSIGNMENT_EXPIRED, ACCOUNT_SUSPENDED, TENANT_SUSPENDED]
+    SignInRequest:
+      type: object
+      required: [personId, code]
+      properties:
+        personId: { type: string }
+        code: { type: string, pattern: "^[0-9]{6}$" }
+    SignInPerson:
+      type: object
+      required: [id, name, title]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        title: { type: string }
+    Scope:
+      type: object
+      required: [type, label]
+      properties:
+        type: { type: string, enum: [self, team, org_unit, pay_group, tenant] }
+        label: { type: string }
+    WorkspaceAccess:
+      type: object
+      required: [id, label, href, scope]
+      properties:
+        id: { type: string, enum: [me, team, hr, payroll, admin, privacy, audit, dashboards] }
+        label: { type: string }
+        href: { type: string }
+        scope: { $ref: "#/components/schemas/Scope" }
+        endsAt: { type: string, format: date }
+    EffectiveAccess:
+      type: object
+      required: [person, accessVersion, workspaces, permissions]
+      properties:
+        person:
+          type: object
+          required: [id, name]
+          properties:
+            id: { type: string }
+            name: { type: string }
+        accessVersion: { type: integer }
+        workspaces:
+          type: array
+          items: { $ref: "#/components/schemas/WorkspaceAccess" }
+        permissions:
+          type: array
+          items:
+            type: object
+            required: [code, scope]
+            properties:
+              code: { type: string }
+              scope: { type: string, enum: [self, team, org_unit, pay_group, tenant] }
+    LeaveBalance:
+      type: object
+      required: [typeCode, typeName, daysLeft, daysUsed]
+      properties:
+        typeCode: { type: string }
+        typeName: { type: string }
+        daysLeft: { type: number }
+        daysUsed: { type: number }
+    NewLeaveRequest:
+      type: object
+      required: [typeCode, startDate, endDate]
+      properties:
+        typeCode: { type: string, enum: [VL, SL] }
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+        note: { type: string }
+    LeaveRequest:
+      type: object
+      required: [id, requesterName, typeName, startDate, endDate, days, status, filedAt, approverName, canDecide]
+      properties:
+        id: { type: string }
+        requesterName: { type: string }
+        typeName: { type: string }
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+        days: { type: number }
+        note: { type: string }
+        status: { type: string, enum: [pending, approved, returned] }
+        filedAt: { type: string, format: date-time }
+        decidedAt: { type: string, format: date-time }
+        decisionComment: { type: string }
+        approverName: { type: string }
+        canDecide: { type: boolean }
+        routing:
+          type: object
+          description: Present when the usual approver could not decide, with who it went to and why.
+          required: [reroutedTo, reasonCode]
+          properties:
+            reroutedTo: { type: string }
+            reasonCode: { type: string, enum: [SOD_2] }
+    Decision:
+      type: object
+      required: [decision]
+      properties:
+        decision: { type: string, enum: [approve, return] }
+        comment: { type: string }

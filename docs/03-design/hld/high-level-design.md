@@ -2,13 +2,13 @@
 
 Status: **Draft v0.2 for owner review** (2026-11-17). Supersedes v0.1. Visual version: [hld.html](hld.html) (open in a browser). UI look and feel: [ui-design-system](../ui-design-system.md) and [ui-preview.html](ui-preview.html).
 
-What changed from v0.1: multi-role access model ([ADR-013](../adr/ADR-013-multi-role-access-model.md)), a frontend architecture organised by workspace, the design language ([ADR-014](../adr/ADR-014-ui-design-language.md)), a seed-data strategy, C4-style levels, key flows, and a decision table. Full change list: [change record](../../00-overview/change-record-2026-11-17.md).
+What changed from v0.1: multi-role access model ([ADR-013](../adr/ADR-013-multi-role-access-model.md)), a frontend architecture organised by workspace, the design language ([ADR-015](../adr/ADR-015-ui-design-language-revised.md)), a seed-data strategy, C4-style levels, key flows, and a decision table. Full change list: [change record](../../00-overview/change-record-2026-11-17.md).
 
 ## 0. Review checklist for the owner
 Please confirm or change each before any code is written:
 1. Roles: the 12 roles and 7 SoD rules in §5 (and [roles-and-permissions](../../02-requirements/access/roles-and-permissions.md)).
 2. Workspaces as the frontend unit (Me, Team, HR, Payroll, Admin, Privacy, Audit) in §6.
-3. Swiss-style design direction ([ADR-014](../adr/ADR-014-ui-design-language.md)) and the preview.
+3. Calm business-software design direction ([ADR-015](../adr/ADR-015-ui-design-language-revised.md)) and the preview.
 4. Seed data scope in §9.
 5. HLD decisions D-01 to D-12 in §12.
 
@@ -110,7 +110,7 @@ erDiagram
 ## 6. Frontend architecture
 - **Unit of navigation = workspace.** Next.js route groups `/me`, `/team`, `/hr`, `/payroll`, `/admin`, `/privacy`, `/audit`. A workspace is visible when the user's effective access includes at least one of its entry permissions (for example `employee:read` with scope `tenant` for HR).
 - **Server-first.** Server components fetch through the API with the user's session; no authorization logic in client code beyond hiding links. A route guard calls `effectiveAccess()` and renders only allowed navigation; a direct URL to a forbidden page returns 403 from the API.
-- **Design system package** (`ui/`): tokens (CSS variables), Radix or React Aria primitives, the catalogue strip, workspace strip, scope chip, approval block, masked value, dense table. See [ui-design-system](../ui-design-system.md).
+- **Design system package** (`ui/`): tokens (CSS variables), Radix or React Aria primitives, the workspace strip, scope chip, approval block, masked value, dense table. See [ui-design-system](../ui-design-system.md).
 - **Form and validation:** zod schemas shared with the API.
 - **State:** server state via the framework cache; minimal client state; optimistic updates only for non-financial actions.
 - **PWA:** offline shell, WebAuthn, web push for approvals; no offline writes for payroll.
@@ -188,7 +188,7 @@ Environments: local, dev, staging (synthetic data only), prod. Details: [deploym
 | Solo operability | Boring stack, managed services, IaC, few moving parts (ADR-001, -002) |
 | Effective dating | Valid-from and valid-to plus recorded-at on history tables (ADR-008) |
 | Integrations unstable | Adapters and outbox, file generation only (ADR-003) |
-| Usability for non-experts | A recognised design system, role-aware navigation, plain copy (ADR-014) |
+| Usability for non-experts | A recognised design system, role-aware navigation, plain copy (ADR-015) |
 | Mobile first for self-service | PWA, small payloads, server components |
 See [NFRs](../../02-requirements/non-functional-requirements.md), [testing-strategy](../../05-quality/testing-strategy.md), [security](../../04-security/README.md).
 
@@ -200,10 +200,10 @@ See [NFRs](../../02-requirements/non-functional-requirements.md), [testing-strat
 | D-03 | Access model | One role per user, role names in code, ABAC engine, scoped RBAC with permissions | Scoped, effective-dated RBAC with permission checks | Real SMEs have multi-hat staff; engine can come later behind `authorize()` | ADR-013 |
 | D-04 | Derived roles | Grant everything, derive from facts | Derive `employee` and `manager` | Cannot drift from the org chart | ADR-013 |
 | D-05 | SoD enforcement | UI hints, policy docs, code | Code: static pairs on assignment, dynamic per action | Auditable and testable | ADR-013 |
-| D-06 | Role switching in UI | Impersonation, separate logins, workspace filter | Workspace filter, no impersonation | No security change, no audit gaps | ADR-013, ADR-014 |
+| D-06 | Role switching in UI | Impersonation, separate logins, workspace filter | Workspace filter, no impersonation | No security change, no audit gaps | ADR-013, ADR-015 |
 | D-07 | Frontend unit | Pages by module, pages by role, pages by workspace | Workspaces (route groups) | Maps to how people think about their hats; stable when roles change | HLD §6 |
-| D-08 | Design language | Material defaults, neo-brutalism, ledger, Swiss style | Swiss style, personnel-file metaphor | Recognised, dense-data friendly, distinct from templates | ADR-014 |
-| D-09 | Fonts | CDN fonts, system fonts, self-hosted | Self-hosted Archivo, Plex Sans, Plex Mono | Privacy, performance, identity | ADR-014 |
+| D-08 | Design language | Material defaults, neo-brutalism, ledger, Swiss style, calm business software | Calm business software: gray, one blue accent, table-first (supersedes the Swiss-style choice) | Recognised, dense-data friendly, distinct from templates | ADR-015 |
+| D-09 | Fonts | CDN fonts, system fonts, self-hosted | Self-hosted IBM Plex Sans, Plex Mono only for identifiers and amounts | Privacy, performance, identity | ADR-015 |
 | D-10 | Seed data | Real-looking data, anonymised production, synthetic | Fully synthetic, `DEV-` identifiers, no real rates | Privacy and legal safety | HLD §9 |
 | D-11 | Platform operator access | Standing access, break-glass | Break-glass in a separate realm | SoD-4 | ADR-004 |
 | D-12 | HLD placement | Single file, folder with visual | `03-design/hld/` with md and html | Reviewable without tooling | change record |

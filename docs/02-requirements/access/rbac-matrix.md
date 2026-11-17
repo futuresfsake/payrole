@@ -51,7 +51,7 @@ Legend: R read · C create · U update · D delete · A approve · X export · M
 | `platform_ops` + any tenant role | SoD-4 | No |
 
 ## Dynamic rules (checked per action)
-- SoD-2: no self-approval of leave, overtime, profile, pay change or loan, even when the user is their own manager through a loop.
+- SoD-2: no self-approval of leave, overtime, profile, pay change or loan, including when the user holds the approving permission themselves.
 - SoD-1: the approver of a payroll run is never its preparer or the author of a rule-set version in it.
 - SoD-3: role assignments to payroll, DPO and admin roles need a second approver who is not the proposer.
 

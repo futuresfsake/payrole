@@ -8,7 +8,8 @@ This is the entry point to requirements. The BA translation of the vision and st
 | [business-rules.md](business-rules.md) | BR-* Philippine payroll/HR rules, formulas, rounding. **VERIFY-tagged values** |
 | [non-functional-requirements.md](non-functional-requirements.md) | NFR-* performance, availability, security, accessibility, etc. |
 | [data-requirements.md](data-requirements.md) | Entities, attributes, classification, retention |
-| [rbac-matrix.md](rbac-matrix.md) | Role × permission matrix |
+| [access/rbac-matrix.md](access/rbac-matrix.md) | Role × permission matrix (multi-role)
+| [access/roles-and-permissions.md](access/roles-and-permissions.md) | Role catalog, permission catalog, role assignment, SoD |
 | [traceability-matrix.md](traceability-matrix.md) | Story → FR → test mapping |
 | [integration-requirements.md](integration-requirements.md) | External interfaces |
 

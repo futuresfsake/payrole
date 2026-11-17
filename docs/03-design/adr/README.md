@@ -16,3 +16,5 @@ Format: Context → Decision → Consequences → Alternatives. Status: Proposed
 | [010](ADR-010-no-biometric-templates.md) | Do not store biometric templates | Accepted |
 | [011](ADR-011-hosting-aws-singapore.md) | Host on AWS Singapore with managed services | Accepted |
 | [012](ADR-012-payroll-first-release-scope.md) | Payroll-first GA; growth modules after GA | Accepted |
+| [013](ADR-013-multi-role-access-model.md) | Multi-role access: permissions, scoped effective-dated role assignments, static and dynamic SoD | Accepted |
+| [014](ADR-014-ui-design-language.md) | UI design language: International Typographic Style on a personnel-file metaphor | Accepted |

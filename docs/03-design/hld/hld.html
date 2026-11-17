@@ -33,18 +33,21 @@ h3{font-size:16px;line-height:24px}
 h4{font-size:14px;line-height:20px}
 .skip{position:absolute;left:-999px;top:8px;background:var(--text);color:var(--surface);padding:8px 16px;z-index:10;border-radius:var(--r-control)}
 .skip:focus{left:8px}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:var(--r-control);font-size:12px;line-height:16px;font-weight:600}
-.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.badge.success{color:var(--success);background:var(--success-bg)} .badge.warning{color:var(--warning);background:var(--warning-bg)} .badge.danger{color:var(--danger);background:var(--danger-bg)} .badge.info{color:var(--info);background:var(--info-bg)} .badge.neutral{color:var(--neutral);background:var(--neutral-bg)}
+.badge{display:inline-flex;align-items:center;gap:var(--s-2);font-size:13px;line-height:20px;white-space:nowrap}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.badge.success{color:var(--success)} .badge.warning{color:var(--warning)} .badge.danger{color:var(--danger)} .badge.info{color:var(--info)} .badge.neutral{color:var(--neutral)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 body{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh}
 nav.side{position:sticky;top:0;align-self:start;height:100vh;padding:var(--s-5) var(--s-4);overflow:auto;background:var(--surface);border-right:1px solid var(--border)}
 nav.side .brand{font-weight:600;font-size:16px;line-height:24px;margin-bottom:var(--s-5)}
 nav.side ul{list-style:none;margin:0;padding:0}
-nav.side a{display:block;padding:6px var(--s-3);border-radius:var(--r-control);color:var(--text-muted);text-decoration:none}
-nav.side a:hover{background:var(--neutral-bg);color:var(--text)}
-nav.side a[aria-current=true]{background:var(--accent-tint);color:var(--accent-hover);font-weight:600}
+nav.side a{display:flex;align-items:center;gap:var(--s-3);width:100%;padding:6px var(--s-3);border-radius:var(--r-control);color:var(--text);text-decoration:none;position:relative}
+nav.side a svg{width:16px;height:16px;fill:none;stroke:var(--text-muted);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+nav.side a:hover{background:var(--neutral-bg)}
+nav.side a[aria-current=true]{background:var(--neutral-bg)}
+nav.side a[aria-current=true] svg{stroke:var(--accent)}
+nav.side a[aria-current=true]::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--accent);border-radius:1px}
 main{padding:var(--s-5) var(--s-5) var(--s-8);min-width:0}
 .page{max-width:1280px}
 .crumb{color:var(--text-muted);margin-bottom:var(--s-2)}
@@ -135,7 +138,7 @@ td .mono{white-space:nowrap}
 </style></head><body>
 <a class="skip" href="#main">Skip to content</a>
 <nav class="side" aria-label="Sections"><div class="brand">PayRole</div>
-<ul><li><a href="#review">Review checklist</a></li><li><a href="#context">Context</a></li><li><a href="#containers">Containers</a></li><li><a href="#access">Access architecture</a></li><li><a href="#frontend">Frontend architecture</a></li><li><a href="#flows">Key flows</a></li><li><a href="#quality">Quality drivers</a></li><li><a href="#data">Data and seed</a></li><li><a href="#deploy">Deployment</a></li><li><a href="#decisions">Decision table</a></li><li><a href="#risks">Risks and questions</a></li></ul></nav>
+<ul><li><a href="#review"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Review checklist</a></li><li><a href="#context"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Context</a></li><li><a href="#containers"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5L12 3z"/><path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5"/></svg>Containers</a></li><li><a href="#access"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Access architecture</a></li><li><a href="#frontend"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg>Frontend architecture</a></li><li><a href="#flows"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h6a4 4 0 0 1 4 4v6"/></svg>Key flows</a></li><li><a href="#quality"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/></svg>Quality drivers</a></li><li><a href="#data"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>Data and seed</a></li><li><a href="#deploy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15a4 4 0 0 1 1-7.9A6 6 0 0 1 17 8a4.5 4.5 0 0 1 1 8.9H7"/></svg>Deployment</a></li><li><a href="#decisions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Decision table</a></li><li><a href="#risks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Risks and questions</a></li></ul></nav>
 <main id="main"><div class="page">
 <div class="crumb"><a href="../../README.md">Docs</a> / Design / High-level design</div>
 <div class="pagehead"><div><h1>High-level design</h1>

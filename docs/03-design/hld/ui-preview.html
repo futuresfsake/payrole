@@ -13,7 +13,7 @@
 :root{
   --paper:#F4F1EA; --surface:#FBFAF6; --ink:#16181D; --muted:#5A5D64; --rule:#C9C3B6;
   --accent:#D6401F; --accent-text:#B53217; --ok:#1F6B4A; --warn:#8A5A00; --err:#B3261E;
-  --u:8px;
+  --s-1:4px; --s-2:8px; --s-3:16px; --s-4:24px; --s-5:32px; --s-6:48px; --s-7:64px; --s-8:96px;
   --f-head:'Archivo','Arial Narrow',Arial,sans-serif;
   --f-ui:'IBM Plex Sans',Arial,sans-serif;
   --f-mono:'IBM Plex Mono',Consolas,monospace;
@@ -27,73 +27,71 @@ a:hover{text-decoration-thickness:2px}
 .mono{font-family:var(--f-mono);font-size:13px;line-height:20px;font-weight:500}
 .label{font:600 12px/16px var(--f-ui);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 h1,h2,h3{font-family:var(--f-head);margin:0;font-weight:700}
-h1{font-size:40px;line-height:44px;letter-spacing:-.01em}
-h2{font-size:24px;line-height:32px;border-top:2px solid var(--ink);padding-top:12px}
-h3{font-size:18px;line-height:24px;font-weight:600}
+h1{font-size:56px;line-height:56px;letter-spacing:-.02em}
+h2{font-size:32px;line-height:36px;letter-spacing:-.01em}
+h3{font-size:18px;line-height:24px;font-weight:600;margin:var(--s-5) 0 var(--s-2)}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 16px;z-index:10}
 .skip:focus{left:8px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-.demo{background:var(--ink);color:var(--paper);padding:8px 24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
-.demo select{font:500 14px var(--f-ui);padding:6px 8px;border:1px solid var(--paper);background:var(--ink);color:var(--paper);border-radius:0;min-height:36px}
+.demo{background:var(--ink);color:var(--paper);padding:var(--s-2) var(--s-4);display:flex;gap:var(--s-3);flex-wrap:wrap;align-items:center;font-size:14px}
+.demo select{font:500 14px var(--f-ui);padding:var(--s-1) var(--s-2);border:1px solid var(--paper);background:var(--ink);color:var(--paper);border-radius:0;min-height:36px}
 .demo .mono{color:#D9D4C7}
 .app{min-height:calc(100vh - 52px);display:grid;grid-template-rows:56px auto 1fr}
-.top{display:flex;align-items:center;gap:24px;padding:0 24px;border-bottom:1px solid var(--ink);background:var(--surface)}
+.top{display:flex;align-items:center;gap:var(--s-4);padding:0 var(--s-4);border-bottom:1px solid var(--ink);background:var(--surface)}
 .top .tenant{font:700 16px var(--f-head)}
-.top .search{flex:1;max-width:420px;border:1px solid var(--muted);border-radius:2px;padding:6px 10px;min-height:36px;font:400 14px var(--f-ui);background:var(--paper);color:var(--ink)}
+.top .search{flex:1;max-width:420px;border:1px solid var(--muted);border-radius:2px;padding:var(--s-1) var(--s-2);min-height:36px;font:400 14px var(--f-ui);background:var(--paper);color:var(--ink)}
 .top .me{margin-left:auto;font-size:14px}
-.strip{display:flex;gap:0;padding:0 24px;border-bottom:1px solid var(--rule);background:var(--surface);overflow-x:auto}
-.strip button{font:600 14px/20px var(--f-ui);padding:12px 16px 10px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--ink);cursor:pointer;min-height:44px;border-radius:0;white-space:nowrap}
+.strip{display:flex;gap:0;padding:0 var(--s-4);border-bottom:1px solid var(--rule);background:var(--surface);overflow-x:auto}
+.strip button{font:600 14px/20px var(--f-ui);padding:var(--s-3) var(--s-3) var(--s-2);border:0;border-bottom:3px solid transparent;background:transparent;color:var(--ink);cursor:pointer;min-height:44px;border-radius:0;white-space:nowrap}
 .strip button:hover{background:#EFEBE0}
 .strip button[aria-current=true]{border-bottom-color:var(--accent)}
 .body{display:grid;grid-template-columns:220px minmax(0,1fr)}
-.rail{border-right:1px solid var(--rule);padding:24px 0}
-.rail a{display:block;padding:8px 24px;border-left:3px solid transparent;color:var(--ink);text-decoration:none;font-size:14px;cursor:pointer}
+.rail{border-right:1px solid var(--rule);padding:var(--s-4) 0}
+.rail a{display:block;padding:var(--s-2) var(--s-4);border-left:3px solid transparent;color:var(--ink);text-decoration:none;font-size:14px;cursor:pointer}
 .rail a:hover{background:#EFEBE0}
 .rail a[aria-current=true]{border-left-color:var(--accent);font-weight:600}
-.content{padding:24px 48px 64px;max-width:1100px}
-.catalog{display:flex;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:6px;margin-bottom:24px}
-.catalog span+span::before{content:"·";margin-right:12px;color:var(--muted)}
-.chip{display:inline-block;border:1px solid var(--ink);padding:2px 8px;font:500 12px/16px var(--f-mono);margin:8px 0 24px}
-.pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-button.pri{font:600 14px/20px var(--f-ui);padding:10px 20px;min-height:40px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:0;cursor:pointer}
+.content{padding:var(--s-4) var(--s-6) var(--s-7);max-width:1100px}
+.catalog{display:flex;gap:var(--s-3);flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:var(--s-1);margin-bottom:var(--s-4)}
+.catalog span+span::before{content:"·";margin-right:var(--s-3);color:var(--muted)}
+.chip{display:inline-block;border:1px solid var(--ink);padding:var(--s-1) var(--s-2);font:500 12px/16px var(--f-mono);margin:var(--s-2) 0 var(--s-4)}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s-3);flex-wrap:wrap}
+button.pri{font:600 14px/20px var(--f-ui);padding:var(--s-2) var(--s-4);min-height:40px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:0;cursor:pointer}
 button.pri:hover{background:#2B2F38;box-shadow:inset 0 -3px 0 var(--accent)}
 button.pri:disabled{background:var(--rule);border-color:var(--rule);color:var(--muted);cursor:not-allowed;box-shadow:none}
-button.sec{font:600 14px/20px var(--f-ui);padding:10px 20px;min-height:40px;background:transparent;color:var(--ink);border:1px solid var(--ink);border-radius:0;cursor:pointer}
+button.sec{font:600 14px/20px var(--f-ui);padding:var(--s-2) var(--s-4);min-height:40px;background:transparent;color:var(--ink);border:1px solid var(--ink);border-radius:0;cursor:pointer}
 button.sec:hover{background:#EFEBE0}
-.tw{overflow-x:auto;margin:16px 0}
+.tw{overflow-x:auto;margin:var(--s-3) 0}
 table{border-collapse:collapse;width:100%;font-size:14px;line-height:20px;background:var(--surface)}
-th{font:600 12px/16px var(--f-ui);text-transform:uppercase;letter-spacing:.06em;text-align:left;color:var(--muted);border-bottom:2px solid var(--ink);padding:10px 12px;white-space:nowrap;position:sticky;top:0;background:var(--surface)}
-td{padding:10px 12px;border-bottom:1px solid var(--rule);height:40px}
+th{font:600 12px/16px var(--f-ui);text-transform:uppercase;letter-spacing:.06em;text-align:left;color:var(--muted);border-bottom:2px solid var(--ink);padding:var(--s-2) var(--s-3);white-space:nowrap;position:sticky;top:0;background:var(--surface)}
+td{padding:var(--s-2) var(--s-3);border-bottom:1px solid var(--rule);height:40px}
 td.n,th.n{text-align:right}
 tbody tr{cursor:pointer;box-shadow:inset 0 0 0 var(--accent)}
 tbody tr:hover td{background:#F0ECE2}
 tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 tbody tr.sel{box-shadow:inset 4px 0 0 var(--accent)}
-.st{display:inline-flex;align-items:center;gap:8px;font-size:14px}
-.st i{display:inline-block;width:10px;height:10px;border:2px solid currentColor}
-.st.ok{color:var(--ok)} .st.ok i{background:currentColor}
-.st.pend{color:var(--warn)} .st.pend i{border-radius:50%;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
-.st.rej{color:var(--err)} .st.rej i{background:currentColor;transform:rotate(45deg)}
-.st.draft{color:var(--muted)} .st.draft i{border-radius:50%}
-.card{display:grid;grid-template-columns:200px minmax(0,1fr);gap:0 24px;border-top:1px solid var(--rule);padding:12px 0}
+.st{display:inline-flex;align-items:center;gap:var(--s-2);font-size:14px}
+.st svg{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:square;stroke-linejoin:miter}
+.sk{height:40px;border-bottom:1px solid var(--rule)}.sk:first-child{border-top:2px solid var(--ink)}
+.panel{border:1px solid var(--ink);background:var(--surface);padding:var(--s-3);margin:var(--s-3) 0;max-width:520px}.panel select{font:400 14px var(--f-ui);padding:var(--s-2);border:1px solid var(--muted);border-radius:2px;background:var(--paper);color:var(--ink);min-height:40px;margin:var(--s-2) 0}
+.st.ok{color:var(--ok)} .st.pend{color:var(--warn)} .st.rej{color:var(--err)} .st.draft{color:var(--muted)} .card{display:grid;grid-template-columns:200px minmax(0,1fr);gap:0 var(--s-4);border-top:1px solid var(--rule);padding:var(--s-3) 0}
 .card:first-of-type{border-top:2px solid var(--ink)}
 .card dt{font:600 12px/20px var(--f-ui);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0}
 .card dd{margin:0}
 .mask{font-family:var(--f-mono);font-size:13px;letter-spacing:.05em}
-.decision{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:0;border:1px solid var(--ink);background:var(--surface);margin:16px 0}
-.decision>div{padding:16px 20px}
+.decision{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:0;border:1px solid var(--ink);background:var(--surface);margin:var(--s-3) 0}
+.decision>div{padding:var(--s-3) var(--s-4)}
 .decision>div+div{border-left:1px solid var(--ink)}
-.decision .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.note{border-left:3px solid var(--warn);padding:8px 12px;margin:16px 0;font-size:14px;background:var(--surface)}
+.decision .btns{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)}
+.note{border-left:3px solid var(--warn);padding:var(--s-2) var(--s-3);margin:var(--s-3) 0;font-size:14px;background:var(--surface)}
 .note.err{border-left-color:var(--err)}
 .num{font-variant-numeric:tabular-nums lining-nums;text-align:right}
-.empty{border:1px dashed var(--muted);padding:24px;font-size:14px}
+.empty{border:1px dashed var(--muted);padding:var(--s-4);font-size:14px}
 @media (max-width:820px){
  .body{display:block}.rail{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--rule);padding:0}
- .rail a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:12px 16px}.rail a[aria-current=true]{border-bottom-color:var(--accent)}
- .content{padding:16px 16px 48px}.top{padding:0 16px;gap:12px}.top .search{display:none}
- .strip{padding:0 8px}.card{display:block}.card dt{margin-bottom:2px}
+ .rail a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:var(--s-3) var(--s-3)}.rail a[aria-current=true]{border-bottom-color:var(--accent)}
+ .content{padding:var(--s-3) var(--s-3) var(--s-6)}.top{padding:0 var(--s-3);gap:var(--s-3)}.top .search{display:none}
+ .strip{padding:0 var(--s-2)}.card{display:block}.card dt{margin-bottom:var(--s-1)}
  .decision{display:block}.decision>div+div{border-left:0;border-top:1px solid var(--ink)}
  h1{font-size:32px;line-height:36px}
 }</style></head><body>
@@ -135,10 +133,17 @@ const EMP=[
  ['EMP-0021','Cruz, Joel','Operations','Driver','Contractual','draft']
 ];
 const STAT={ok:['Active','ok'],pend:['On probation','pend'],draft:['Contract ends 31 Dec','draft'],rej:['Rejected','rej']};
-const st=k=>'<span class="st '+k+'"><i></i>'+({ok:'Active',pend:'Pending',rej:'Rejected',draft:'Draft'}[k])+'</span>';
+const ICON={ok:'<path d="M3 8.5l3.5 3.5L13 4.5"/>',pend:'<circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5"/>',rej:'<path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/>',draft:'<circle cx="8" cy="8" r="6" stroke-dasharray="2 2"/>'};
+const ic=k=>'<svg viewBox="0 0 16 16" aria-hidden="true">'+ICON[k]+'</svg>';
+const st=k=>'<span class="st '+k+'">'+ic(k)+({ok:'Active',pend:'Pending',rej:'Rejected',draft:'Draft'}[k])+'</span>';
+const TABLE=new Set(['HR/People','Me/Payslips','Payroll/Runs','Admin/Role assignments']);
+let stepup=false,revealed=false;
 let cur='ena',ws='Me',page='Home',sel=null;
 const $=id=>document.getElementById(id);
 function setUser(k){cur=k;ws=P[k].ws[0];page=NAV[ws][0];sel=null;draw()}
+let loading=false,timer=null;
+function nav(){loading=true;draw();clearTimeout(timer);timer=setTimeout(()=>{loading=false;draw()},350)}
+function skeleton(title){return head(title)+'<div role="status" aria-live="polite"><span class="label">Loading '+title.toLowerCase()+'</span>'+Array.from({length:6},()=>'<div class="sk"></div>').join('')+'</div>'}
 function draw(){
  const u=P[cur];
  $('me').textContent=u.name;
@@ -146,18 +151,19 @@ function draw(){
  $('strip').style.display=u.ws.length>1?'flex':'none';
  $('rail').innerHTML=NAV[ws].map(p=>'<a tabindex="0" role="link" '+(p===page?'aria-current="true"':'')+' data-p="'+p+'">'+p+'</a>').join('');
  $('roles').textContent=u.roles.join(', ');
- $('content').innerHTML=view();
+ $('content').setAttribute('aria-busy',loading);
+ $('content').innerHTML=loading&&TABLE.has(ws+'/'+page)?skeleton(page):view();
 }
 function head(title,action){return '<div class="chip" aria-label="Scope">'+SCOPE[ws]+'</div><div class="pagehead"><h1>'+title+'</h1>'+(action||'')+'</div>'}
 function view(){
  if(ws==='HR'&&page==='People'){
   if(sel!==null){const e=EMP[sel];
    return '<div class="catalog mono"><span>'+e[0]+'</span><span>201 FILE</span><span>'+STAT[e[5]][0].toUpperCase()+'</span><span>EFFECTIVE 2026-11-01</span></div>'
-   +'<div class="pagehead"><h1>'+e[1]+'</h1><button class="sec" data-back>Back to people</button></div><div style="height:24px"></div>'
+   +'<div class="pagehead"><h1>'+e[1]+'</h1><button class="sec" data-back>All people</button></div><div style="height:24px"></div>'
    +'<dl style="margin:0">'
    +card('Position',e[3])+card('Department',e[2])+card('Employment',e[4]+', full time')+card('Reports to',(e[0]==='EMP-0005'||e[0]==='EMP-0002')?'Casa, Rico':(e[0]==='EMP-0012'?'Lee, Sofia':(e[0]==='EMP-0019'?'Padilla, Rey':(e[0]==='EMP-0008'?'Lim, Faye':'Padilla, Rey'))))
    +card('Pay group',e[2]==='Finance'?'Monthly (office)':(e[2]==='HR and Admin'?'Monthly (office)':'Semi-monthly (operations)'))+card('Monthly rate','<span class="num" style="display:inline">₱32,500.00</span>')
-   +card('SSS number','<span class="mask">▒▒▒▒▒▒▒ DEV-4821</span> <button class="sec" style="min-height:32px;padding:4px 12px" data-reveal>Reveal</button> <span class="mono" style="color:var(--muted)">step-up and purpose required</span>')
+   +card('SSS number',revealed?'<span class="mono">DEV-SSS-'+e[0].slice(4)+'-4821</span> <span style="color:var(--muted);font-size:14px">Shown for 30 seconds. Your reason is in the audit log.</span>':'<span class="mono">DEV-SSS-····-4821</span> <button class="sec" style="min-height:32px;padding:var(--s-1) var(--s-3)" data-reveal>Show full number</button>')+(stepup?'<div class="panel"><strong>Why do you need this number?</strong><br><label class="label" for="why">Reason, kept in the audit log</label><br><select id="why"><option>Payroll check</option><option>Government filing</option><option>Employee request</option></select><div class="btns"><button class="pri" data-confirm>Confirm with passkey</button><button class="sec" data-cancel>Cancel</button></div></div>':'')
    +card('Medical notes','<span class="mono" style="color:var(--muted)">Not shown. Visible to HR records only.</span>')
    +'</dl>';}
   return head('People','<button class="pri">Add employee</button>')
@@ -176,7 +182,7 @@ function view(){
  if(ws==='Payroll'){
   const prep=cur==='paolo';
   return head('Payroll run · 1–15 Nov 2026')+'<div class="tw"><table><thead><tr><th>Employee</th><th class="n">Gross</th><th class="n">Deductions</th><th class="n">Net</th><th>Check</th></tr></thead><tbody>'
-  +[['Reyes, Hana','21,000.00','3,812.40','17,187.60','ok'],['Dizon, Marco','24,500.00','4,350.00','20,150.00','ok'],['Garcia, Luis','9,750.00','1,100.25','8,649.75','pend']].map(r=>'<tr><td>'+r[0]+'</td><td class="n">₱'+r[1]+'</td><td class="n">−₱'+r[2]+'</td><td class="n">₱'+r[3]+'</td><td>'+(r[4]==='ok'?st('ok'):'<span class="st pend"><i></i>No time record</span>')+'</td></tr>').join('')+'</tbody></table></div>'
+  +[['Reyes, Hana','21,000.00','3,812.40','17,187.60','ok'],['Dizon, Marco','24,500.00','4,350.00','20,150.00','ok'],['Garcia, Luis','9,750.00','1,100.25','8,649.75','pend']].map(r=>'<tr><td>'+r[0]+'</td><td class="n">₱'+r[1]+'</td><td class="n">−₱'+r[2]+'</td><td class="n">₱'+r[3]+'</td><td>'+(r[4]==='ok'?st('ok'):'<span class="st pend">'+ic('pend')+'No time record</span>')+'</td></tr>').join('')+'</tbody></table></div>'
   +'<div class="decision"><div><h3>Approval</h3><p style="font-size:14px;margin:8px 0 0">1 employee has no time record. Fix or exclude before submitting.</p></div><div><div class="label">'+(prep?'Preparer':'Approver')+'</div><div class="btns">'+(prep?'<button class="pri" disabled>Submit for approval</button>':'<button class="pri">Approve payroll</button><button class="sec">Return to preparer</button>')+'</div>'+(prep?'<p style="font-size:13px;margin:12px 0 0;color:var(--muted)">Submit is disabled: 1 unresolved item.</p>':'<p style="font-size:13px;margin:12px 0 0;color:var(--muted)">Needs step-up. Not available if you prepared this run.</p>')+'</div></div>';}
  if(ws==='Admin'){
   return head('Role assignments','<button class="pri">Propose assignment</button>')+'<div class="tw"><table><thead><tr><th>Person</th><th>Role</th><th>Scope</th><th>Ends</th><th>Status</th></tr></thead><tbody>'
@@ -189,11 +195,13 @@ function view(){
 function card(k,v){return '<div class="card"><dt>'+k+'</dt><dd>'+v+'</dd></div>'}
 document.addEventListener('click',e=>{
  const t=e.target;let a;
- if(a=t.closest('[data-ws]')){ws=a.dataset.ws;page=NAV[ws][0];sel=null;draw();return}
- if(a=t.closest('[data-p]')){page=a.dataset.p;sel=null;draw();return}
+ if(a=t.closest('[data-ws]')){ws=a.dataset.ws;page=NAV[ws][0];sel=null;nav();return}
+ if(a=t.closest('[data-p]')){page=a.dataset.p;sel=null;nav();return}
  if(a=t.closest('[data-row]')){sel=+a.dataset.row;draw();return}
  if(t.closest('[data-back]')){sel=null;draw();return}
- if(t.closest('[data-reveal]')){alert('Step-up required. Enter your passkey and a purpose to continue.')}
+ if(t.closest('[data-reveal]')){stepup=true;draw();return}
+ if(t.closest('[data-cancel]')){stepup=false;draw();return}
+ if(t.closest('[data-confirm]')){stepup=false;revealed=true;draw();setTimeout(()=>{revealed=false;draw()},30000);return}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const a=e.target.closest('[data-row],[data-p]');if(a)a.click()}});
 $('who').innerHTML=Object.keys(P).map(k=>'<option value="'+k+'">'+P[k].name+'</option>').join('');

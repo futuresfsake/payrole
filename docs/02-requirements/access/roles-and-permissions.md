@@ -71,7 +71,8 @@ Rules:
 2. Assignments to `payroll_preparer`, `payroll_approver`, `dpo` and `tenant_admin` need a second approver.
 3. `auditor` assignments must have `valid_to` (maximum 90 days, renewable).
 4. Derived roles are computed at request time, never stored as assignments.
-5. Ending employment ends every granted assignment at the effective date, in the same transaction, and revokes sessions.
+5. **Bootstrap:** the first one or two `tenant_admin` assignments are created at tenant provisioning by the platform onboarding procedure (flag `is_bootstrap`, no proposer or approver, reason recorded). They are listed in the first access review and are the only assignments allowed without a second approver. Later admins need one.
+6. Ending employment ends every granted assignment at the effective date, in the same transaction, and revokes sessions.
 
 ## 5. Resolution algorithm
 ```
@@ -96,7 +97,7 @@ Field masks: if one assignment gives masked access and another full access, the 
 | ID | Type | Rule |
 |---|---|---|
 | SoD-1 | Static + dynamic | `payroll_preparer` and `payroll_approver` cannot be assigned to one account; and the approver of a run can never be its preparer. |
-| SoD-2 | Dynamic | No one approves their own request (leave, OT, profile change, pay change, loan), including when they hold `manager` over themselves via a loop. |
+| SoD-2 | Dynamic | No one approves their own request (leave, OT, profile change, pay change, loan), including when they hold the approving permission themselves. |
 | SoD-3 | Process | Granting `payroll_*`, `dpo` or `tenant_admin` needs a second approver who is not the proposer. |
 | SoD-4 | Static | Platform operators hold no tenant assignments; access is break-glass. |
 | SoD-5 | Static | `tenant_admin` cannot hold `payroll_preparer`, `payroll_approver` or `hr_admin` (admin could grant themselves data access). |

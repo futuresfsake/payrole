@@ -65,7 +65,7 @@ audit_log(id, tenant_id, seq, ts, actor_id, actor_type, action, entity, entity_i
 ## 7. Authorization
 - Permissions: `resource:action` (e.g. `compensation:read`, `payroll_run:approve`).
 - Scope resolver: SELF | TEAM | DEPARTMENT | COMPANY from reporting line as of today.
-- Policy function pure and unit-tested against the [RBAC matrix](../02-requirements/rbac-matrix.md) (matrix is machine-readable YAML; test generated from it).
+- Policy function pure and unit-tested against the [RBAC matrix](../02-requirements/access/rbac-matrix.md) (matrix is machine-readable YAML; test generated from it).
 - SoD checks in domain layer (approver ≠ preparer, requester ≠ approver).
 
 ## 8. Payroll engine (summary; see [TDD-payroll-engine](tdd/TDD-payroll-engine.md))

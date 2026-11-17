@@ -16,7 +16,9 @@ ADR-014 chose a Swiss-style, personnel-file look: paper background, vermilion ac
 8. **Icons:** Lucide, one stroke weight, a limited set (about 24).
 9. **Control borders:** inputs and controls use `gray-500` borders (4.8:1 on white). `gray-200` is only for decorative table and section borders, which fail the 3:1 non-text contrast rule on controls.
 10. **Light theme only** in v1; tokens allow a dark theme later.
-11. **Status mapping:** approved is success, pending is warning, returned is info, overdue is danger, SoD-blocked is danger with a lock icon. Each has a word and an icon.
+11. **Selected and active states** (navigation, tabs, rows): a neutral gray fill, the same font weight as unselected items, and the accent only as a thin 2 px bar or as the icon colour. No tinted accent pills and no bold accent text. Navigation items are full-width rows with an icon, never shrink-wrapped pills.
+12. **Status display:** status is a word with a small dot in the status colour, with no filled capsule or tinted pill behind it.
+13. **Status mapping:** approved is success, pending is warning, returned is info, overdue is danger, SoD-blocked is danger with a lock icon. Each has a word and an icon.
 
 ## Consequences
 - Familiar patterns lower the learning curve. The visual risk moves from "distinctive" to "generic", so quality depends on spacing discipline, precise copy and real states, not on style.

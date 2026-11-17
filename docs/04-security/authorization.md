@@ -113,7 +113,7 @@ The session holds a snapshot of active assignment ids and a version number. Anyt
 - **SoD property tests:** randomised sequences of grants, requests and approvals; the invariant "no one approves their own request and no account holds a forbidden pair without a live exception" must hold.
 - **Tenant isolation test:** every table and every route is exercised as tenant A against tenant B ids.
 - **Route coverage:** a test lists all routes and fails if a route lacks a permission declaration.
-- **Seed scenarios:** the [seed](../../db/seed/README.md) includes the multi-role people from the worked examples, a manager loop, a time-boxed auditor and an SoD exception, so tests and demos use realistic access shapes.
+- **Seed scenarios:** the [seed](../../db/seed/README.md) includes the multi-role people from the worked examples, a self-approval case, a time-boxed auditor and an SoD exception, so tests and demos use realistic access shapes.
 - **Mutation testing** on the policy function (Stryker) with a target score agreed in [quality-gates](../05-quality/quality-gates.md).
 
 ## 15. Out of scope for v1
